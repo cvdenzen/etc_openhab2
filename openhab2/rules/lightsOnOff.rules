@@ -92,13 +92,15 @@ end
 // Reden: als de client (op een mobiel, tablet, etc.) draait, vraagt hij geregeld (elke 10 seconden of zo)
 // de waarde op. Om te voorkomen dat er steeds een meting wordt gedaan, moet de fysieke waarde (gekoppeld
 // aan de exec binding die de meting doet) ontkoppeld worden van de getoonde waarde (die zonder _P aan het eind).
-/rule "LichtIntensiteit_Woonkamer meten"
+// VERWARREND: DE EXEC BINDING ZORGT AL VOOR ELKE 10 SECONDEN EEN METING (IN ITEMS FILE)
+rule "LichtIntensiteit_Woonkamer meten"
 when
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
 	Time cron "0/10 * * * * ?"
 then
 	// Zet de gemeten waarde (uit ...._P) in de variabele
-	postUpdate(LichtIntensiteit_Woonkamer,LichtIntensiteit_Woonkamer_P.state as float)
+	postUpdate(LichtIntensiteit_Woonkamer,LichtIntensiteit_Woonkamer_P.state)
+	logDebug("Initialisaties","postUpdate(Lichtintensiteit_Woonkamer uitgevoerd, waarde "+LichtIntensiteit_Woonkamer.toString())
 end
 
 
