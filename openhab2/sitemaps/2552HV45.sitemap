@@ -8,7 +8,7 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
                 Text item=pir_gf_achterdeur
 		// pir aan fysieke pen 11.
                 Text item=pir_gf_achterdeur17
- //  mappings=[OFF="Uit",ON="Aan"]
+ //  mappings=[OFF="Uit",ON="Aan"] niet nodig of zo
 	}
 	Frame label="Zon" {
 		Group item=LightSensor
