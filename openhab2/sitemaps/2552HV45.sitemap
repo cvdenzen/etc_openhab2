@@ -21,6 +21,9 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Frame label="Grafiek" {
 			Chart item=LichtIntensiteit_Woonkamer label="Lichtintensiteit woonkamer" service="rrd4j"
 		}
+		Frame label="Grafiek pir" {
+			Chart item=pir_gf_achterdeur17 label="Bewegingssensor achterdeur" service="rrd4j"
+		}
 	}
 	Frame label="Datum" {
 		Text item=Datum

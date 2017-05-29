@@ -8,5 +8,6 @@ Strategies {
 Items {
   LightsOnIntensityThreshold : strategy = everyChange,restoreOnStartup,everyHour
   LightsEnableIntensityThreshold  : strategy = everyChange,restoreOnStartup,everyHour
+  LichtIntensiteit_Woonkamer : strategy = everyChange,restoreOnStartup,everyHour
 }
 

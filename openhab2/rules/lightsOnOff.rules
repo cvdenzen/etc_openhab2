@@ -98,7 +98,7 @@ when
 	Time cron "0/10 * * * * ?"
 then
 	// Zet de gemeten waarde (uit ...._P) in de variabele
-	postUpdate(LichtIntensiteit_Woonkamer,LichtIntensiteit_Woonkamer_P)
+	postUpdate(LichtIntensiteit_Woonkamer,LichtIntensiteit_Woonkamer_P.state as float)
 end
 
 
