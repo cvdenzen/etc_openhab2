@@ -1,0 +1,4 @@
+DateTime Datum "Datum en tijd: [%1$tA, %1$td-%1$tm-%1$tY %1$tH:%1$tM]" {channel="ntp:ntp:local:dateTime"}
+/*
+#[%1$tA, %1$td-%1$tm-%1$tY]"
+*/

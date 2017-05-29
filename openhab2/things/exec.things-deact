@@ -1,0 +1,21 @@
+#
+# De lampen die via klik-aan-klik-uit worden aangestuurd
+#
+# %1 is de datum/tijd
+# %2$s is het commando als string (hier dus ON of OFF)
+# %3 is de naam van het Item
+Thing exec:command:Light_GF_Huiskamer_Achterdeur_Schemerlamp_Thing [ command="sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 %2$s" ]
+exec:command:Light_GF_Huiskamer_Achter_Staandelamp_Thing [ command="sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 %2$s" ]
+
+
+# 20170108 Group All
+#20170108 /* GF staat voor Ground Floor, oftewel Begane Grond */
+#20170108 Group gGF (All)
+#20170108 Group GF_Huiskamer "Huiskamer" <switch> (gGF)
+#20170108 
+#20170108 /* active groups */
+#20170108 Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
+#20170108 
+#20170108 /* Verlichting */
+#20170108 Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
+#20170108 Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 off]"}

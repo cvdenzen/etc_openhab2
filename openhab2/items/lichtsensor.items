@@ -1,0 +1,17 @@
+/*
+
+Voorbeeld voor exec binding.
+Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
+*/
+
+Group LightSensor "Lichtmeter"
+Number LichtIntensiteit_Woonkamer "Lichtintensiteit woonkamer [%.1f]" (LightSensor) {exec="<[/home/pi/LightSensorBH1750/bh1750_2.sh:10000:]"}
+Number LightsOnIntensityThreshold "Lichtintensiteit waarbij lichten worden ingeschakeld [%.1f]" (LightSensor) // { exec="<[/bin/sh@@-c@@echo -n 24:60000:REGEX((.*?))]" }
+Number LightsEnableIntensityThreshold "Lichtintensiteit waarbij het automatisch inschakelen wordt geactiveerd [%.1f]" (LightSensor)  //{ exec="<[/bin/sh@@-c@@echo -n 200:60000:REGEX((.*?))]" }
+DateTime BackoffTimer "Tijd waarop automatisch inschakelen wordt geactiveerd (indien nu inactief) [%1$tH:%1$tM]" (LightSensor) //{exec="<[/bin/sh@@-c@@uptime | awk '{ print $1 }':6000:REGEX((.*?))]"}
+Number AutoOnEnabled "Automatisch inschakelen is geactiveerd (0=nee, 1=ja) [%1d]" (LightSensor)
+Number LightOnPir_Achterdeur_Schemerlamp "Lamp is aan ivm PIR (0=nee, 1=ja) [%1d]" (LightSensor)
+//DateTime PIR_aflooptimer_xxx "Tijd waarop de lamp weer uitgaat als pir beslist [%1$tH:%1$tM]" (LightSensor) //{exec="<[/bin/sh@@-c@@uptime | awk '{ print $1 }':6000:REGEX((.*?))]"}
+//DateTime PIR1_BackoffTimer_xxx "Tijd waarop lamp weer mag reageren op PIR1 [%1$tH:%1$tM]" (LightSensor)
+Number GF_Presence "0=kamer is leeg, 1=er is iemand [%1d]" (LightSensor)
+Number GF_Passenger "0=geen passenger, 1=er is iemand die net thuiskomt waarvoor het licht even aan moet [%1d]" (LightSensor)

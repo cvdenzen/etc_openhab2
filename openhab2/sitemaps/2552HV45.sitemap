@@ -1,0 +1,28 @@
+sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
+{
+	Frame {
+		Group item=gGF label="Begane grond" icon="groundfloor"
+		Switch item=Lights mappings=[OFF="Uit",ON="Aan"]
+		Switch item=Light_GF_Huiskamer_Achterdeur_Schemerlamp mappings=[OFF="Uit",ON="Aan"]
+		Switch item=Light_GF_Huiskamer_Achter_Staandelamp mappings=[OFF="Uit",ON="Aan"]
+                Text item=pir_gf_achterdeur
+		// pir aan fysieke pen 11.
+                Text item=pir_gf_achterdeur17
+ //  mappings=[OFF="Uit",ON="Aan"]
+	}
+	Frame label="Zon" {
+		Group item=LightSensor
+		Text item=Sunrise_Time
+		Text item=Sunset_Time
+		Text item=LichtIntensiteit_Woonkamer
+		Setpoint item=LightsOnIntensityThreshold minValue=1 maxValue=1000 step=1 
+		Setpoint item=LightsEnableIntensityThreshold minValue=1 maxValue=1000 step=1 
+		Setpoint item=AutoOnEnabled minValue=0 maxValue=1 step=1 
+		Frame label="Grafiek" {
+			Chart item=LichtIntensiteit_Woonkamer label="Lichtintensiteit woonkamer" service="rrd4j"
+		}
+	}
+	Frame label="Datum" {
+		Text item=Datum
+	}
+}

@@ -1,0 +1,13 @@
+import org.openhab.core.library.types.*
+import java.util.*
+
+var java.util.Calendar calendar = java.util.Calendar.getInstance()
+
+rule "Test1"
+when
+	System started
+then
+	logInfo("LightsOn_Sensor","Start Bereken backoffdatetimeitem")
+	//calendar.add(calendar.MINUTE,1200)
+	logInfo("LightsOn_Sensor","Einde Bereken backoffdatetimeitem met offset")
+end

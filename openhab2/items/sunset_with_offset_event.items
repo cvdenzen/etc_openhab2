@@ -1,0 +1,7 @@
+DateTime Sunrise_Time "Zonsopkomst [%1$tH:%1$tM]" { channel="astro:sun:home:rise#start" }
+DateTime Sunset_Time "Zonsondergang [%1$tH:%1$tM]" { channel="astro:sun:home:set#end" }
+/*
+//#Switch Sunset_Event "Zonsondergang" {astro="planet=sun, type=set, property=end, offset=0"}
+//#Switch Sunset_with_Offset_Event1 "Zonsondergang1" {astro="planet=sun, type=set, property=end, offset=45"}
+//#Switch Sunset_minus_1hour "Een uur voor zonsondergang" {astro="planet=sun, type=set, property=end, offset=-60"}
+*/

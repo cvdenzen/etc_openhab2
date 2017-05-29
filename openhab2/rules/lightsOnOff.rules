@@ -1,0 +1,295 @@
+import org.openhab.core.library.types.*
+/* niet nodig import java.lang.Math */
+import java.util.concurrent.locks.ReentrantLock
+import org.openhab.model.script.actions.Timer
+//import java.util.Calendar
+
+var Timer backoffTimer
+var ReentrantLock backoffLock=new ReentrantLock()
+var ReentrantLock universalLock=new ReentrantLock()
+//var Calendar calendar = Calendar.getInstance()
+var boolean inInitialisationPhase = true
+var Timer initialisationPhaseTimer = null
+var Timer PIR_aflooptimer = null
+var Timer PIR1_BackoffTimer = null
+var ReentrantLock initLock=new ReentrantLock()
+
+rule "Initialisaties"
+when
+	System started
+then
+// even hardcoded 20160209
+	//			postUpdate(LightsOnIntensityThreshold,19)
+	//			postUpdate(LightsEnableIntensityThreshold,200)
+	postUpdate(AutoOnEnabled,0) // niet standaard enablen, dan zouden bij reboot de lampen aan gaan
+	postUpdate(GF_Presence,1) // er is niemand in de kamer
+	postUpdate(GF_Passenger,0) // er komt niemand thuis
+	// via persistence postUpdate(LightsOnIntensityThreshold,25)
+	// via persistence postUpdate(LightsEnableIntensityThreshold,200)
+		initialisationPhaseTimer = createTimer(now.plusMinutes(2)) [|
+			// Init de waardes als ze niet door persistence zijn geinit
+			logDebug("Initialisaties","initialisationPhaseTimer finished")
+			logDebug("Initialisaties","LightsOnIntensityThreshold="+ LightsOnIntensityThreshold.toString())
+			logDebug("Initialisaties","initialisationPhaseTimer finished, threshold logged to debug (like this message)")
+			if ((LightsOnIntensityThreshold == null) || (LightsOnIntensityThreshold.state == NULL)) {
+				postUpdate(LightsOnIntensityThreshold,18)
+				logDebug("Initialisaties","LightsOnIntensityThreshold was null or NULL, set to 18")
+			}
+			if ((LightsEnableIntensityThreshold == null) || (LightsEnableIntensityThreshold.state == NULL)) {
+				postUpdate(LightsEnableIntensityThreshold,88)
+				logDebug("Initialisaties","LightsEnableIntensityThreshold was null or NULL, set to 88")
+			}
+			if ((AutoOnEnabled == null) || (AutoOnEnabled.state == NULL)) {
+				postUpdate(AutoOnEnabled,0)
+				logDebug("Initialisaties","AutoOnEnabled was null or NULL, set to {}",AutoOnEnabled.state)
+			}
+			//postUpdate(AutoOnEnabled,1) // tijdelijk
+			initialisationPhaseTimer = null
+			// om de 433 MHz zender pin als output te configureren, anders gaat de zender onbedoeld uitzenden en de kaku storen
+			sendCommand(Switch_433_dummy,ON)
+			logDebug("Initialisaties","SendCommand(Switch_433_dummy,ON) uitgevoerd")
+		]
+end
+
+//rule "lightsOn_sunset"
+//when
+	//Item Sunset_with_Offset_Event1 received update ON
+//then
+	//logDebug("astro","item Sunset_with_offset_Event received update ON")
+	//sendCommand(gGF,ON)
+//end
+
+rule "lightsOff"
+when
+	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
+	Time cron "0 8 2 * * ?"
+then
+	sendCommand(gGF,OFF)
+end
+
+//
+// Op werkdagen iets eerder de lichten uit
+//
+rule "lightsOff_2"
+when
+	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
+	Time cron "0 0 1 ? * TUE,WED,THU,FRI"
+then
+	sendCommand(gGF,OFF)
+end
+
+//
+// Bij de achterdeur iets eerder uit, maar alleen in augustus (vakantie)
+rule "lightsOff_3"
+when
+	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
+	Time cron "11 32 21 * 8 ?"
+then
+	sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
+end
+
+rule "LightsOn_Sensor"
+when
+	Item LichtIntensiteit_Woonkamer changed
+	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
+	or Time cron "0/30 * * * * ?"
+then
+	// logDebug("LightsOn_Sensor","Start")
+	backoffLock.lock()
+	logDebug("LightsOn_Sensor","backoffLock aquired")
+	try {
+		if (initialisationPhaseTimer == null ) {
+				logInfo("LightsOn_Sensor","initialisationPhaseTimer is null")
+				// Init de waardes als ze niet door persistence zijn geinit
+				if (LightsOnIntensityThreshold == null) {
+					logInfo("LightsOn_Sensor","LightsOnIntensityThreshold is null")
+					postUpdate(LightsOnIntensityThreshold,17)
+				}
+				if (LightsEnableIntensityThreshold == null) {
+					logInfo("LightsOn_Sensor","LightsEnableIntensityThreshold is null")
+					postUpdate(LightsEnableIntensityThreshold,197)
+				}
+				//postUpdate(AutoOnEnabled,1) // tijdelijk?
+		}
+		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
+		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
+		// volgende regel is een noodmaatregel
+		IntensiteitAverage = LichtIntensiteit_Woonkamer
+		// logDebug("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+		// logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
+		if (AutoOnEnabled.state==1) {
+			// logDebug("LightsOn_Sensor","AutoOnEnabled.state is 1")
+		}
+		if (AutoOnEnabled.state==0) {
+			// logDebug("LightsOn_Sensor","AutoOnEnabled.state is 0")
+		}
+		// logDebug("LightsOn_Sensor","IntensiteitAverage={}",IntensiteitAverage)
+		// logDebug("LightsOn_Sensor","LightsOnIntensityThreshold={}", LightsOnIntensityThreshold) // print ongeveer type=NumberItem State=19
+		// logDebug("LightsOn_Sensor","LightsOnIntensityThreshold.state={}", LightsOnIntensityThreshold.state) // print ongeveer type=NumberItem State=19
+		// logDebug("LightsOn_Sensor","IntensiteitAverage.state={}",IntensiteitAverage)
+		var int a1=((IntensiteitAverage as NumberItem).state as DecimalType).intValue
+		// logDebug("LightsOn_Sensor","Start a2")
+		var int a2=(LightsOnIntensityThreshold.state as DecimalType).intValue
+		// logDebug("LightsOn_Sensor","Start if statement")
+		//if ((AutoOnEnabled.state==1) && ((IntensiteitAverage.state as DecimalType)<(LightsOnIntensityThreshold.state as DecimalType))) {
+		if ((AutoOnEnabled.state==1) && (a1<a2)) {
+			logInfo("LightsOn_Sensor","Het is donker")
+			//logInfo("LightsOn_Sensor","Het is donker [{}] [{}] en de lichten moeten aan.",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+			// Het is donker, zet de lichten aan als ze nog niet aan staan
+			sendCommand(gGF,ON)
+			logInfo("LightsOn_Sensor","Update AutoOnEnabled to 0")
+			postUpdate(AutoOnEnabled,0) // niet steeds opnieuw automatisch aanzetten
+			logInfo("LightsOn_Sensor","Update AutoOnEnabled to 0 finished")
+			// nu iets dat niet helemaal klopt, want er zal tijdsverschil zijn tussen beide timers...
+			// weet niet hoe timer te updaten BackoffTimer.postUpdate(now.plusMinutes(1200) as DateTime)
+			logInfo("LightsOn_Sensor","Update BackoffTimer finished")
+			backoffTimer = createTimer(now.plusMinutes(1200)) [| // 1200 minuten is 20 uur
+				postUpdate(AutoOnEnabled,1)
+			]
+		}
+	}
+	finally {
+		backoffLock.unlock()
+	}
+end
+rule "Enable lights on by light sensor"
+when
+	Time is noon
+	//or Item Sunset_minus_1hour received update ON
+	// or Time cron "0/4 * * * * ?"
+then
+	logInfo("Enable lights on","Het is noon, zorg dat de lichten weer aan mogen als het donker wordt")
+	backoffLock.lock()
+	logInfo("Enable lights on","Lock acquired")
+	try {
+		postUpdate(AutoOnEnabled,1)
+		logInfo("Enable lights on","AutoOnEnabled op 1 gezet")
+		if (backoffTimer!=null) {
+			logInfo("Enable lights on","cancel backoffTimer")
+			backoffTimer.cancel()
+			logInfo("Enable lights on","backoffTimer gecancelled")
+			backoffTimer=null
+		}
+	}
+	finally {
+		backoffLock.unlock()
+	}
+end
+//
+// debug average berekening
+rule "debug Average berekening"
+when
+	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag)), 0/2 mag ook: elke 2 minuten/seconden etc te starten bij 0
+	Time cron "1 * * * * ?"
+then
+		// 20170110 averageSince lijkt niet te werken, of syntax voor var heb ik fout
+		//logDebug("LightsOn_Sensor","A Gemiddelde over z mn meten")
+		//var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
+		//IntensiteitAverage = 255.2
+		//logDebug("LightsOn_Sensor","Gemiddelde over z mn meten")
+		//logDebug("LightsOn_Sensor","Gemiddelde over z mn gemeten is {}",IntensiteitAverage.toString())
+		//logDebug("LightsOn_Sensor","B Gemiddelde over z mn meten")
+		//logDebug("LightsOn_Sensor","Gemiddelde over z mn gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+end
+// Enable het aanzetten als er erg veel licht is
+rule "Enable lights on by daylight"
+when
+	Item LichtIntensiteit_Woonkamer changed
+then
+	logInfo("Enable lights on","LichtIntensiteit_Woonkamer changed to [{}]",LichtIntensiteit_Woonkamer.state.toString())
+	backoffLock.lock()
+	try {
+		if (AutoOnEnabled.state==0 && (LichtIntensiteit_Woonkamer.state != NULL) 
+			&&  ((LichtIntensiteit_Woonkamer.state as float)>(LightsEnableIntensityThreshold.state as float))
+		) {
+			logInfo("Enable lights on","Het is erg licht [{}], drempel=[{}] en de automaat mag weer aan.",LichtIntensiteit_Woonkamer.state.toString(),LightsEnableIntensityThreshold.state)
+			postUpdate(AutoOnEnabled,1)
+			if ( backoffTimer !=null) {
+				backoffTimer.cancel()
+				backoffTimer=null
+			}
+			// Zet de lampen uit
+			sendCommand(gGF,OFF)
+		}
+	}
+	finally {
+		backoffLock.unlock()
+	}
+end
+ // Als de pir sensor beweging ziet, dan de lichten bij de achterdeur aan (en na 5 minuten weer uit?)
+rule "PIR achterdeur licht aan"
+when
+	// CLOSED betekent in principe bij activelow HI op de pin.
+	// En dat was ook zo, tot 2017-05-26 ca 23 uur.
+	// GPIO17 is fysiek pin 11, maar dat is ook GPIO0.
+	// Vanaf 2017-05-26 is het kennelijk weer GPIO0, hoewel eerst GPIO17 ook werkte (en
+	// toen was ook CLOSED bij HI).
+
+	// Vanaf 2017-05-26 23 uur:
+	// In openhab zie ik GPIO17, in raspbian zie ik gpio0 reageren op PIR.
+	// In openhab zie ik het verkeerdom gebeuren: beweging is OPEN, rust is CLOSED.
+	// In raspbian zie ik  pin 0 en dan is 1 actief.
+	// Ik word gek!
+	Item pir_gf_achterdeur17 changed to OPEN
+then
+	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging")
+	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
+	universalLock.lock() // om de test op null zijn van de timers te beveiligen
+	try {
+		// Als er het laatste kwartier (de PIR1_BackoffTimer) nog beweging was, nemen we aan
+		// dat GF_Presence aan mag. Er is kennelijk iemand in de kamer.
+		if (PIR1_BackoffTimer !=  null) {
+			// in try clause, want PIR1_BackoffTimer kan inmiddels null geworden zijn
+			try {
+				PIR1_BackoffTimer.cancel()
+			}
+			finally {
+				logDebug("pir_gf_achterdeur17","PIR1_BackoffTimer.cancel() uitgevoerd")
+			}
+			postUpdate(GF_Presence,1)
+		}
+		if (
+			(GF_Presence.state != 1)
+			&& (LichtIntensiteit_Woonkamer.state != NULL)
+			&& ((LichtIntensiteit_Woonkamer.state as float)>(LightsEnableIntensityThreshold.state as float))
+		) {
+			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
+			postUpdate(GF_Passenger,1)
+			postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
+			// sendCommand(Lights_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
+			PIR_aflooptimer = createTimer(now.plusSeconds(30)) [|
+				postUpdate(LightOnPir_Achterdeur_Schemerlamp,0)
+				postUpdate(GF_Passenger,0)
+			]
+			// Als er binnen de hieronder genoemde tijd weer beweging is, nemen we aan dat er iemand
+			// in de kamer aanwezig is en daar langdurig verblijft (tv kijken of zo).
+			PIR1_BackoffTimer = createTimer(now.plusMinutes(60)) [|
+				universalLock.lock()
+				try {
+					logInfo("pir_gf_achterdeur17","PIR1_BackoffTimer is afgelopen, lamp mag weer aan via PIR1")
+					postUpdate(GF_Presence,0) // er is niemand meer in de kamer
+				}
+				finally {
+					universalLock.unlock()
+				}
+			]
+		}
+		//DEBUG REGELTJE:
+		//postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
+	}
+	finally {
+		universalLock.unlock()
+	}
+end
+
+// Het daadwerkelijk schakelen van de lamp bij de achterdeur
+rule "Achterdeur_Schemerlamp"
+when
+	Item LightOnPir_Achterdeur_Schemerlamp changed
+then
+	if (LightOnPir_Achterdeur_Schemerlamp.state==1) {
+		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
+	} else {
+		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
+	}
+end

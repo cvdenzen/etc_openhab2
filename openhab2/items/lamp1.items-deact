@@ -1,0 +1,20 @@
+Group All
+/* GF staat voor Ground Floor, oftewel Begane Grond */
+Group gGF (All)
+Group GF_Huiskamer "Huiskamer" <switch> (gGF)
+
+/* active groups */
+Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
+
+/* Verlichting */
+/*
+#
+# openhab 2, werkt op 20170108 nog niet
+#
+#Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) {channel="exec:command:Light_GF_Huiskamer_Achterdeur_Schemerlamp_Thing:input" }
+#
+# openhab 1.8, of compat mode in openhab2
+#
+*/
+Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp  "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
+Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 off]"}
