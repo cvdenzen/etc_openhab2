@@ -11,6 +11,6 @@ Strategies {
 // Voor rrd moet je in openhab minstens elke minuut, anders doet chart het niet
 Items {
   LichtIntensiteit_Woonkamer : strategy = everyChange, every30seconds, everyUpdate
-  pir_gf_achterdeur17
+  pir_gf_achterdeur17 : strategy = everyChange, every30seconds, everyUpdate
 }
 

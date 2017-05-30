@@ -250,7 +250,7 @@ when
 	// Ik word gek!
 	Item pir_gf_achterdeur17 changed to OPEN
 then
-	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging")
+	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
 	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
 	universalLock.lock() // om de test op null zijn van de timers te beveiligen
 	try {
