@@ -10,8 +10,8 @@ var ReentrantLock universalLock=new ReentrantLock()
 //var Calendar calendar = Calendar.getInstance()
 var boolean inInitialisationPhase = true
 var Timer initialisationPhaseTimer = null
-var Timer PIR_aflooptimer = null
-var Timer PIR1_BackoffTimer = null
+var Timer PIR1_PassengerTimer = null
+var Timer PIR1_PresenceTimer = null
 var ReentrantLock initLock=new ReentrantLock()
 
 rule "Initialisaties"
@@ -24,6 +24,7 @@ then
 	postUpdate(AutoOnEnabled,0) // niet standaard enablen, dan zouden bij reboot de lampen aan gaan
 	postUpdate(GF_Presence,1) // er is niemand in de kamer
 	postUpdate(GF_Passenger,0) // er komt niemand thuis
+	// LightOnPir_Achterdeur_Schemerlamp.postUpdate(0) // Het is niet handig bij elke reboot het licht uit te zetten
 	// via persistence postUpdate(LightsOnIntensityThreshold,25)
 	// via persistence postUpdate(LightsEnableIntensityThreshold,200)
 		initialisationPhaseTimer = createTimer(now.plusMinutes(2)) [|
@@ -44,10 +45,10 @@ then
 				logDebug("Initialisaties","AutoOnEnabled was null or NULL, set to {}",AutoOnEnabled.state)
 			}
 			//postUpdate(AutoOnEnabled,1) // tijdelijk
-			initialisationPhaseTimer = null
 			// om de 433 MHz zender pin als output te configureren, anders gaat de zender onbedoeld uitzenden en de kaku storen
 			sendCommand(Switch_433_dummy,ON)
 			logDebug("Initialisaties","SendCommand(Switch_433_dummy,ON) uitgevoerd")
+			initialisationPhaseTimer = null
 		]
 end
 
@@ -99,8 +100,8 @@ when
 	Time cron "0/10 * * * * ?"
 then
 	// Zet de gemeten waarde (uit ...._P) in de variabele
-	postUpdate(LichtIntensiteit_Woonkamer,LichtIntensiteit_Woonkamer_P.state)
-	logDebug("Initialisaties","postUpdate(Lichtintensiteit_Woonkamer uitgevoerd, waarde "+LichtIntensiteit_Woonkamer.toString())
+	LichtIntensiteit_Woonkamer.postUpdate(LichtIntensiteit_Woonkamer_P.state)
+	logDebug("Initialisaties","LichtIntensiteit_Woonkamer.postUpdate() uitgevoerd, waarde "+LichtIntensiteit_Woonkamer.toString())
 end
 
 
@@ -253,44 +254,44 @@ then
 	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
 	universalLock.lock() // om de test op null zijn van de timers te beveiligen
 	try {
-		// Als er het laatste kwartier (de PIR1_BackoffTimer) nog beweging was, nemen we aan
-		// dat GF_Presence aan mag. Er is kennelijk iemand in de kamer.
-		if (PIR1_BackoffTimer !=  null) {
-			// in try clause, want PIR1_BackoffTimer kan inmiddels null geworden zijn
-			try {
-				PIR1_BackoffTimer.cancel()
-			}
-			finally {
-				logDebug("pir_gf_achterdeur17","PIR1_BackoffTimer.cancel() uitgevoerd")
-			}
-			postUpdate(GF_Presence,1)
-		}
 		if (
-			(GF_Presence.state != 1)
+			(GF_Presence.state != 1) // er is niemand in de kamer
 			&& (LichtIntensiteit_Woonkamer.state != NULL)
 			&& ((LichtIntensiteit_Woonkamer.state as float)>(LightsEnableIntensityThreshold.state as float))
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
-			postUpdate(GF_Passenger,1)
-			postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
+			GF_Passenger.postUpdate(1)
+			LightOnPir_Achterdeur_Schemerlamp.postUpdate(1) // zet het licht aan
 			// sendCommand(Lights_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
-			PIR_aflooptimer = createTimer(now.plusSeconds(30)) [|
+			PIR1_PassengerTimer = createTimer(now.plusSeconds(30)) [|
 				postUpdate(LightOnPir_Achterdeur_Schemerlamp,0)
 				postUpdate(GF_Passenger,0)
 			]
-			// Als er binnen de hieronder genoemde tijd weer beweging is, nemen we aan dat er iemand
-			// in de kamer aanwezig is en daar langdurig verblijft (tv kijken of zo).
-			PIR1_BackoffTimer = createTimer(now.plusMinutes(60)) [|
-				universalLock.lock()
-				try {
-					logInfo("pir_gf_achterdeur17","PIR1_BackoffTimer is afgelopen, lamp mag weer aan via PIR1")
-					postUpdate(GF_Presence,0) // er is niemand meer in de kamer
-				}
-				finally {
-					universalLock.unlock()
-				}
-			]
 		}
+		// er was beweging, dus er is iemand
+		postUpdate(GF_Presence,1)
+		if (PIR1_PresenceTimer!=null) {
+			// in try clause, want PIR1_PresenceTimer kan inmiddels null geworden zijn
+			try {
+				PIR1_PresenceTimer.cancel()
+			}
+			finally {
+				logDebug("pir_gf_achterdeur17","PIR1_PresenceTimer.cancel() uitgevoerd")
+			}
+		}
+		// Als er binnen de hieronder genoemde tijd geen beweging is, nemen we aan dat er niemand
+		// in de kamer aanwezig is.
+		// Altijd een nieuwe timer starten
+		PIR1_PresenceTimer = createTimer(now.plusMinutes(60)) [|
+			universalLock.lock()
+			try {
+				logInfo("pir_gf_achterdeur17","PIR1_PresenceTimer is afgelopen, lamp mag weer aan via PIR1")
+				GF_Presence.postUpdate(0) // er is niemand meer in de kamer
+			}
+			finally {
+				universalLock.unlock()
+			}
+		]
 		//DEBUG REGELTJE:
 		//postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
 	}
