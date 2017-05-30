@@ -7,3 +7,5 @@ cp -a /etc/openhab2 . in
 git add *
 git commit
 git push
+
+.
