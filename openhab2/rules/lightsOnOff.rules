@@ -132,7 +132,7 @@ then
 		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
 		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
 		// volgende regel is een noodmaatregel
-		IntensiteitAverage = LichtIntensiteit_Woonkamer
+		IntensiteitAverage = LichtIntensiteit_Woonkamer.state as DecimalType
 		// logDebug("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
 		// logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
 		if (AutoOnEnabled.state==1) {
@@ -145,7 +145,7 @@ then
 		// logDebug("LightsOn_Sensor","LightsOnIntensityThreshold={}", LightsOnIntensityThreshold) // print ongeveer type=NumberItem State=19
 		// logDebug("LightsOn_Sensor","LightsOnIntensityThreshold.state={}", LightsOnIntensityThreshold.state) // print ongeveer type=NumberItem State=19
 		// logDebug("LightsOn_Sensor","IntensiteitAverage.state={}",IntensiteitAverage)
-		var int a1=((IntensiteitAverage as NumberItem).state as DecimalType).intValue
+		var int a1=IntensiteitAverage.intValue
 		// logDebug("LightsOn_Sensor","Start a2")
 		var int a2=(LightsOnIntensityThreshold.state as DecimalType).intValue
 		// logDebug("LightsOn_Sensor","Start if statement")
@@ -218,7 +218,7 @@ then
 	backoffLock.lock()
 	try {
 		if (AutoOnEnabled.state==0 && (LichtIntensiteit_Woonkamer.state != NULL) 
-			&&  ((LichtIntensiteit_Woonkamer.state as float)>(LightsEnableIntensityThreshold.state as float))
+			&&  ((LichtIntensiteit_Woonkamer.state as Number)>(LightsEnableIntensityThreshold.state as Number))
 		) {
 			logInfo("Enable lights on","Het is erg licht [{}], drempel=[{}] en de automaat mag weer aan.",LichtIntensiteit_Woonkamer.state.toString(),LightsEnableIntensityThreshold.state)
 			postUpdate(AutoOnEnabled,1)
@@ -257,7 +257,7 @@ then
 		if (
 			(GF_Presence.state != 1) // er is niemand in de kamer
 			&& (LichtIntensiteit_Woonkamer.state != NULL)
-			&& ((LichtIntensiteit_Woonkamer.state as float)>(LightsEnableIntensityThreshold.state as float))
+			&& ((LichtIntensiteit_Woonkamer.state as Number)>(LightsEnableIntensityThreshold.state as Number))
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
