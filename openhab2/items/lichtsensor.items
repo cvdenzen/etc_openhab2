@@ -5,9 +5,10 @@ Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lig
 */
 
 Group LightSensor "Lichtmeter"
+Group chart1 "Chart"
 // Fysieke sensor
 Number LichtIntensiteit_Woonkamer_P "Lichtintensiteit woonkamer physiek [%.1f]" {exec="<[/home/pi/LightSensorBH1750/bh1750_2.sh:10000:]"}
-Number LichtIntensiteit_Woonkamer "Lichtintensiteit woonkamer [%.1f]" (LightSensor)
+Number LichtIntensiteit_Woonkamer "Lichtintensiteit woonkamer [%.1f]" (LightSensor,chart1)
 Number LightsOnIntensityThreshold "Lichtintensiteit waarbij lichten worden ingeschakeld [%.1f]" (LightSensor) // { exec="<[/bin/sh@@-c@@echo -n 24:60000:REGEX((.*?))]" }
 Number LightsEnableIntensityThreshold "Lichtintensiteit waarbij het automatisch inschakelen wordt geactiveerd [%.1f]" (LightSensor)  //{ exec="<[/bin/sh@@-c@@echo -n 200:60000:REGEX((.*?))]" }
 DateTime BackoffTimer "Tijd waarop automatisch inschakelen wordt geactiveerd (indien nu inactief) [%1$tH:%1$tM]" (LightSensor) //{exec="<[/bin/sh@@-c@@uptime | awk '{ print $1 }':6000:REGEX((.*?))]"}

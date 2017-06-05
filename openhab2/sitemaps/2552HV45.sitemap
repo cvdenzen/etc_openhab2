@@ -22,7 +22,8 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Setpoint item=GF_Passenger minValue=0 maxValue=1 step=1 
 	}
 	Chart item=LichtIntensiteit_Woonkamer label="Lichtintensiteit woonkamer" service="rrd4j"
-	Chart item=pir_gf_achterdeur17 label="Bewegingssensor achterdeur" service="rrd4j"
+	//Chart item=pir_gf_achterdeur17 label="Bewegingssensor achterdeur" service="rrd4j"
+	Chart item=chart1 label="Licht en beweging achterdeur Begane Grond"
 	Frame label="Datum" {
 		Text item=Datum
 	}
