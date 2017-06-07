@@ -7,7 +7,7 @@ Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lig
 Group LightSensor "Lichtmeter"
 Group chart1 "Chart"
 /* zie lightsOnOff.rules: daar worden vars die in group gInitializeZero zitten op 0 gezet indien niet geinit */
-Group gInitializeZero
+Group gInitializeZero "Variabelen die op 0 mogen worden geinitialisseerd als ze null zijn"
 // Fysieke sensor
 Number LichtIntensiteit_Woonkamer_P "Lichtintensiteit woonkamer physiek [%.1f]" {exec="<[/home/pi/LightSensorBH1750/bh1750_2.sh:10000:]"}
 Number LichtIntensiteit_Woonkamer "Lichtintensiteit woonkamer [%.1f]" (LightSensor,chart1)
