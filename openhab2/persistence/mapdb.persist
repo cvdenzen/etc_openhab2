@@ -9,5 +9,10 @@ Items {
   LightsOnIntensityThreshold : strategy = everyChange,restoreOnStartup,everyHour
   LightsEnableIntensityThreshold  : strategy = everyChange,restoreOnStartup,everyHour
   LichtIntensiteit_Woonkamer : strategy = everyChange,restoreOnStartup,everyHour
+  AutoOnEnabled : strategy = everyChange,restoreOnStartup,everyHour
+  GF_Presence : strategy = everyChange,restoreOnStartup,everyHour
+  GF_Passenger : strategy = everyChange,restoreOnStartup,everyHour
+  GF_Passenger_minutes : strategy = everyChange,restoreOnStartup,everyHour
+  GF_Presence_minutes1 : strategy = everyChange,restoreOnStartup,everyHour
 }
 
