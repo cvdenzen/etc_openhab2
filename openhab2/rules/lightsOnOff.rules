@@ -272,7 +272,7 @@ then
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
 			LightOnPir_Achterdeur_Schemerlamp.postUpdate(1) // zet het licht aan
-			PIR1_PassengerTimer = createTimer(now.plusSeconds(GF_Passenger_minutes.state as Number)) [|
+			PIR1_PassengerTimer = createTimer(now.plusMinutes((GF_Passenger_minutes.state as Number).intValue)) [|
 				postUpdate(LightOnPir_Achterdeur_Schemerlamp,0)
 				postUpdate(GF_Passenger,0)
 			]
@@ -291,7 +291,7 @@ then
 		// Als er binnen de hieronder genoemde tijd geen beweging is, nemen we aan dat er niemand
 		// in de kamer aanwezig is.
 		// Altijd een nieuwe timer starten
-		PIR1_PresenceTimer = createTimer(now.plusMinutes(GF_Presence_minutes1.state as Number)) [|
+		PIR1_PresenceTimer = createTimer(now.plusMinutes((GF_Presence_minutes1.state as Number).intValue)) [|
 			universalLock.lock()
 			try {
 				logInfo("pir_gf_achterdeur17","PIR1_PresenceTimer is afgelopen, lamp mag weer aan via PIR1")
