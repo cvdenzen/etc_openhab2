@@ -18,3 +18,5 @@ Number LightOnPir_Achterdeur_Schemerlamp "Lamp is aan ivm PIR (0=nee, 1=ja) [%1d
 //DateTime PIR1_BackoffTimer_xxx "Tijd waarop lamp weer mag reageren op PIR1 [%1$tH:%1$tM]" (LightSensor)
 Number GF_Presence "0=kamer is leeg, 1=er is iemand [%1d]" (LightSensor)
 Number GF_Passenger "0=geen passenger, 1=er is iemand die net thuiskomt waarvoor het licht even aan moet [%1d]" (LightSensor)
+Number GF_Passenger_minutes "Aantal minuten dat het licht aangaat als er iemand binnenkomt en het is donker [%3d]"
+Number GF_Presence_minutes1 "Aantal minuten voordat de kamer als leeg wordt aangemerkt na beweging [%3d]"

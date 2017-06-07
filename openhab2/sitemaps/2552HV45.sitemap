@@ -18,6 +18,8 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Setpoint item=LightsOnIntensityThreshold minValue=1 maxValue=1000 step=1 
 		Setpoint item=LightsEnableIntensityThreshold minValue=1 maxValue=1000 step=1 
 		Setpoint item=AutoOnEnabled minValue=0 maxValue=1 step=1
+		Setpoint item=GF_Passenger_minutes minValue=1 maxValue=60
+		Setpoint item=GF_Presence_minutes1 minValue=1 maxValue=180
 		Setpoint item=GF_Presence minValue=0 maxValue=1 step=1 
 		Setpoint item=GF_Passenger minValue=0 maxValue=1 step=1 
 	}
