@@ -48,6 +48,18 @@ then
 			logDebug("Initialisaties","SendCommand(Switch_433_dummy,ON) uitgevoerd")
 			initialisationPhaseTimer = null
 		]
+		logInfo(	"Initializer", "Started Timer ...")
+	
+	
+	      createTimer(now.plusSeconds(45)) [|
+		
+		  logInfo(	"Initializer", "... initializing!")
+		  //Wir warten 45 Sekunden, dann initalisieren wir alle die nicht aus der Datenbank befüllt wurden
+		  gInitializeZero.members.filter( x | x.state == NULL).forEach[ item |
+			
+			postUpdate( item, 0)
+		]
+	]
 end
 
 //rule "lightsOn_sunset"

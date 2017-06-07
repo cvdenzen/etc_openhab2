@@ -6,6 +6,8 @@ Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lig
 
 Group LightSensor "Lichtmeter"
 Group chart1 "Chart"
+/* zie lightsOnOff.rules: daar worden vars die in group gInitializeZero zitten op 0 gezet indien niet geinit */
+Group gInitializeZero
 // Fysieke sensor
 Number LichtIntensiteit_Woonkamer_P "Lichtintensiteit woonkamer physiek [%.1f]" {exec="<[/home/pi/LightSensorBH1750/bh1750_2.sh:10000:]"}
 Number LichtIntensiteit_Woonkamer "Lichtintensiteit woonkamer [%.1f]" (LightSensor,chart1)
@@ -16,7 +18,7 @@ Number AutoOnEnabled "Automatisch inschakelen is geactiveerd (0=nee, 1=ja) [%1d]
 Number LightOnPir_Achterdeur_Schemerlamp "Lamp is aan ivm PIR (0=nee, 1=ja) [%1d]" (LightSensor)
 //DateTime PIR_aflooptimer_xxx "Tijd waarop de lamp weer uitgaat als pir beslist [%1$tH:%1$tM]" (LightSensor) //{exec="<[/bin/sh@@-c@@uptime | awk '{ print $1 }':6000:REGEX((.*?))]"}
 //DateTime PIR1_BackoffTimer_xxx "Tijd waarop lamp weer mag reageren op PIR1 [%1$tH:%1$tM]" (LightSensor)
-Number GF_Presence "0=kamer is leeg, 1=er is iemand [%1d]" (LightSensor)
-Number GF_Passenger "0=geen passenger, 1=er is iemand die net thuiskomt waarvoor het licht even aan moet [%1d]" (LightSensor)
-Number GF_Passenger_minutes "Aantal minuten dat het licht aangaat als er iemand binnenkomt en het is donker [%3d]"
-Number GF_Presence_minutes1 "Aantal minuten voordat de kamer als leeg wordt aangemerkt na beweging [%3d]"
+Number GF_Presence "0=kamer is leeg, 1=er is iemand [%1d]" (LightSensor,gInitializeZero)
+Number GF_Passenger "0=geen passenger, 1=er is iemand die net thuiskomt waarvoor het licht even aan moet [%1d]" (LightSensor,gInitializeZero)
+Number GF_Passenger_minutes "Aantal minuten dat het licht aangaat als er iemand binnenkomt en het is donker [%3d]" (gInitializeZero)
+Number GF_Presence_minutes1 "Aantal minuten voordat de kamer als leeg wordt aangemerkt na beweging [%3d]" (gInitializeZero)
