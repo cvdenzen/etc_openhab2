@@ -5,6 +5,7 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Switch item=Lights mappings=[OFF="Uit",ON="Aan"]
 		Switch item=Light_GF_Huiskamer_Achterdeur_Schemerlamp mappings=[OFF="Uit",ON="Aan"]
 		Switch item=Light_GF_Huiskamer_Achter_Staandelamp mappings=[OFF="Uit",ON="Aan"]
+		Text item=gf_w_tb_w
         //        Text item=pir_gf_achterdeur
 		// pir aan fysieke pen 11.
                 Text item=pir_gf_achterdeur17
@@ -25,7 +26,7 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 	}
 	Chart item=LichtIntensiteit_Woonkamer label="Lichtintensiteit woonkamer" service="rrd4j"
 	//Chart item=pir_gf_achterdeur17 label="Bewegingssensor achterdeur" service="rrd4j"
-	Chart item=chart1 label="Licht en beweging achterdeur Begane Grond"
+	Chart item=pir_gf_achterdeur17 label="Licht en beweging achterdeur Begane Grond"
 	Frame label="Datum" {
 		Text item=Datum
 	}
