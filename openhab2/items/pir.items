@@ -1,4 +1,4 @@
 Contact pir_gf_achterdeur "PIR [%s]" { gpio="pin:0 activelow:no force:yes" }
 Contact pir_gf_achterdeur27 "PIR27 [%s]" (chart1){ gpio="pin:27 activelow:no force:yes" }
 Contact pir_gf_achterdeur17 "PIR17 [%s]" { gpio="pin:17 activelow:no force:yes" }
-Switch gf_w_tb_w "TV huiskamer" { exec="<[/bin/sh@@-c@@ping -c 1 192.168.2.79 | grep \"packets transmitted\" | sed -e \"s/.*1 received.*/ON/\" -e \"s/.*0 received.*/OFF/\":30000:REGEX((.*))]"}
+Switch gf_w_tb_w "TV huiskamer [%3s]" { exec="<[/bin/sh@@-c@@ping -c 1 192.168.2.79 | grep \"packets transmitted\" | sed -e \"s/.*1 received.*/ON/\" -e \"s/.*0 received.*/OFF/\":30000:REGEX((.*))]"}
