@@ -320,3 +320,25 @@ then
 		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
 	}
 end
+// tbv persistence number item zeten
+rule "bg_w_tv_w"
+when
+	Item bg_w_tv_w changed
+then
+	if (bg_w_tv_w.state="ON") {
+		bg_w_tv_w_n.postUpdate(1)
+	} else {
+		bg_w_tv_w_n.postUpdate(0)
+	}
+end
+// tbv persistence number item zeten
+rule "bg_w_tv_w"
+when
+	Item bg_x_imac3 changed
+then
+	if (bg_x_imac3.state="ON") {
+		bg_x_imac3_n.postUpdate(1)
+	} else {
+		bg_x_imac3_n.postUpdate(0)
+	}
+end

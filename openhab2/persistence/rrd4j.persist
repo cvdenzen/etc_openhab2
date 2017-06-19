@@ -12,5 +12,6 @@ Strategies {
 Items {
   LichtIntensiteit_Woonkamer : strategy = everyChange, every30seconds, everyUpdate
   pir_gf_achterdeur17 : strategy = everyChange, every30seconds, everyUpdate
+  chart3 : strategy = everyChange, every30seconds, everyUpdate
 }
 
