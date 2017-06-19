@@ -268,6 +268,8 @@ then
 			(GF_Presence.state != 1) // er is niemand in de kamer
 			&& (LichtIntensiteit_Woonkamer != NULL)
 			&& ((LichtIntensiteit_Woonkamer.state as Number)<(LightsOnIntensityThreshold.state as Number))
+			&& ((bg_w_tv_w_n.state as Number)==0) // tv staat uit
+			&& ((bg_x_imac3_n.state as Number)==0) // iMac3 staat uit
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
@@ -325,20 +327,32 @@ rule "bg_w_tv_w"
 when
 	Item bg_w_tv_w changed
 then
-	if (bg_w_tv_w.state="ON") {
+	if (bg_w_tv_w.state==ON) {
 		bg_w_tv_w_n.postUpdate(1)
 	} else {
 		bg_w_tv_w_n.postUpdate(0)
 	}
 end
 // tbv persistence number item zeten
-rule "bg_w_tv_w"
+rule "bg_x_imac3"
 when
 	Item bg_x_imac3 changed
 then
-	if (bg_x_imac3.state="ON") {
+	if (bg_x_imac3.state==ON) {
 		bg_x_imac3_n.postUpdate(1)
 	} else {
 		bg_x_imac3_n.postUpdate(0)
+	}
+end
+
+// tbv persistence number item zeten
+rule "pir_gf_achterdeur17"
+when
+	Item pir_gf_achterdeur17 changed
+then
+	if (pir_gf_achterdeur17.state="ON") {
+		bg_w_pir_w_n.postUpdate(1)
+	} else {
+		bg_w_pir_w_n.postUpdate(0)
 	}
 end
