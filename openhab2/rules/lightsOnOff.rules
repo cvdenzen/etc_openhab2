@@ -355,4 +355,5 @@ then
 	} else {
 		bg_w_pir_w_n.postUpdate(0)
 	}
+	bg_w_pir_w_n.persist();
 end
