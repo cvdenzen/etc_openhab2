@@ -350,7 +350,7 @@ rule "pir_gf_achterdeur17"
 when
 	Item pir_gf_achterdeur17 changed
 then
-	if (pir_gf_achterdeur17.state="ON") {
+	if (pir_gf_achterdeur17.state==OPEN) {
 		bg_w_pir_w_n.postUpdate(1)
 	} else {
 		bg_w_pir_w_n.postUpdate(0)
