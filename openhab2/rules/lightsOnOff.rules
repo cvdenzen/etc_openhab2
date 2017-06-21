@@ -19,7 +19,8 @@ then
 // even hardcoded 20160209
 	//			postUpdate(LightsOnIntensityThreshold,19)
 	//			postUpdate(LightsEnableIntensityThreshold,200)
-	postUpdate(AutoOnEnabled,0) // niet standaard enablen, dan zouden bij reboot de lampen aan gaan
+	// autoOnEnabled wordt via mapdb gerestored
+	//postUpdate(AutoOnEnabled,0) // niet standaard enablen, dan zouden bij reboot de lampen aan gaan
 	postUpdate(GF_Presence,1) // er is niemand in de kamer
 	postUpdate(GF_Passenger,0) // er komt niemand thuis
 	// LightOnPir_Achterdeur_Schemerlamp.postUpdate(0) // Het is niet handig bij elke reboot het licht uit te zetten
@@ -124,7 +125,7 @@ when
 then
 	// logDebug("LightsOn_Sensor","Start")
 	backoffLock.lock()
-	logDebug("LightsOn_Sensor","backoffLock aquired")
+	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
 		if (initialisationPhaseTimer == null ) {
 				logInfo("LightsOn_Sensor","initialisationPhaseTimer is null")
