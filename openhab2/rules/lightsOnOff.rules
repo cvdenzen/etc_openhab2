@@ -91,15 +91,6 @@ then
 end
 
 //
-// Bij de achterdeur iets eerder uit, maar alleen in augustus (vakantie)
-rule "lightsOff_3"
-when
-	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
-	Time cron "11 32 21 * 8 ?"
-then
-	sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
-end
-//
 // Lees elke 10 seconden de lichtsensor en store de waarde in het item LichtIntensiteit_Woonkamer
 // Reden: als de client (op een mobiel, tablet, etc.) draait, vraagt hij geregeld (elke 10 seconden of zo)
 // de waarde op. Om te voorkomen dat er steeds een meting wordt gedaan, moet de fysieke waarde (gekoppeld
