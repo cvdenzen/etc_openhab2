@@ -10,6 +10,6 @@ git push
 
 On raspberry in /home/pi/gitrepos/etc_openhab2 of zo:
 git pull
-cp -a openhab2 /etc/openhab2
+cp -a openhab2 /etc
 
 .
