@@ -311,10 +311,10 @@ when
 then
 	if (LightOnPir_Achterdeur_Schemerlamp.state==1) {
 		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
-				logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)")
+		logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)")
 	} else {
 		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
-				logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)")
+		logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)")
 	}
 end
 // tbv persistence number item zeten
