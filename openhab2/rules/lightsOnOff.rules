@@ -257,18 +257,19 @@ then
 	universalLock.lock() // om de test op null zijn van de timers te beveiligen
 	try {
 		if (
-			(GF_Presence.state != 1) // er is niemand in de kamer
-			&& (LichtIntensiteit_Woonkamer != NULL)
+			//(GF_Presence.state != 1) // er is niemand in de kamer
+			(LichtIntensiteit_Woonkamer != NULL)
 			&& ((LichtIntensiteit_Woonkamer.state as Number)<(LightsOnIntensityThreshold.state as Number))
 			&& ((bg_w_tv_w_n.state as Number)==0) // tv staat uit
 			&& ((bg_x_imac3_n.state as Number)==0) // iMac3 staat uit
+			&& (Light_GF_Huiskamer_Achterdeur_Schemerlamp.state==0) // alleen als hij nu uit is
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
 			LightOnPir_Achterdeur_Schemerlamp.postUpdate(1) // zet het licht aan
 			PIR1_PassengerTimer = createTimer(now.plusMinutes((GF_Passenger_minutes.state as Number).intValue)) [|
-				postUpdate(LightOnPir_Achterdeur_Schemerlamp,0)
-				postUpdate(GF_Passenger,0)
+				LightOnPir_Achterdeur_Schemerlamp.postUpdate(0)
+				GF_Passenger.postUpdate(0)
 			]
 		}
 		// er was beweging, dus er is iemand
@@ -310,8 +311,10 @@ when
 then
 	if (LightOnPir_Achterdeur_Schemerlamp.state==1) {
 		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
+				logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)")
 	} else {
 		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
+				logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)")
 	}
 end
 // tbv persistence number item zeten
