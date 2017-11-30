@@ -9,7 +9,6 @@ var ReentrantLock universalLock=new ReentrantLock()
 var boolean inInitialisationPhase = true
 var Timer initialisationPhaseTimer = null
 var Timer PIR1_PassengerTimer = null
-var Timer PIR1_PresenceTimer = null
 var ReentrantLock initLock=new ReentrantLock()
 
 rule "Initialisaties"
@@ -21,9 +20,8 @@ then
 	//			postUpdate(LightsEnableIntensityThreshold,200)
 	// autoOnEnabled wordt via mapdb gerestored
 	//postUpdate(AutoOnEnabled,0) // niet standaard enablen, dan zouden bij reboot de lampen aan gaan
-	postUpdate(GF_Presence,1) // er is niemand in de kamer
+	postUpdate(GF_Presence,1) // er is iemand in de kamer
 	postUpdate(GF_Passenger,0) // er komt niemand thuis
-	// LightOnPir_Achterdeur_Schemerlamp.postUpdate(0) // Het is niet handig bij elke reboot het licht uit te zetten
 	// via persistence postUpdate(LightsOnIntensityThreshold,25)
 	// via persistence postUpdate(LightsEnableIntensityThreshold,200)
 		initialisationPhaseTimer = createTimer(now.plusMinutes(2)) [|
@@ -254,7 +252,16 @@ when
 then
 	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
 	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
+	logDebug("pir_gf_achterdeur17","Het is erg licht [{}], drempel=[{}]",LichtIntensiteit_Woonkamer.state.toString(),LightsOnIntensityThreshold.state)
+	logDebug("pir_gf_achterdeur17","LichtIntensiteit_Woonkamer.state.toString()=[{}], LightsOnIntensityThreshold.state=[{}]",
+		LichtIntensiteit_Woonkamer.state.toString(),
+		LightsOnIntensityThreshold.state
+	)
+	logDebug("pir_gf_achterdeur17","bg_w_tv_w_n.state=[{}]",bg_w_tv_w_n.state)
+	logDebug("pir_gf_achterdeur17","bg_x_imac3_n.state as Number=[{}]",bg_x_imac3_n.state)
+	logDebug("pir_gf_achterdeur17","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state=[{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state)
 	universalLock.lock() // om de test op null zijn van de timers te beveiligen
+	logDebug("pir_gf_achterdeur17","lock acquired")
 	try {
 		if (
 			//(GF_Presence.state != 1) // er is niemand in de kamer
@@ -266,58 +273,21 @@ then
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
-			LightOnPir_Achterdeur_Schemerlamp.postUpdate(1) // zet het licht aan
+			sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON) // zet het licht aan
 			PIR1_PassengerTimer = createTimer(now.plusMinutes((GF_Passenger_minutes.state as Number).intValue)) [|
-				LightOnPir_Achterdeur_Schemerlamp.postUpdate(0)
+				sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
 				GF_Passenger.postUpdate(0)
 			]
 		}
 		// er was beweging, dus er is iemand
 		GF_Presence.postUpdate(1)
-		if (PIR1_PresenceTimer!=null) {
-			// in try clause, want PIR1_PresenceTimer kan inmiddels null geworden zijn
-			try {
-				PIR1_PresenceTimer.cancel()
-			}
-			finally {
-				logDebug("pir_gf_achterdeur17","PIR1_PresenceTimer.cancel() uitgevoerd")
-			}
-		}
-		// Als er binnen de hieronder genoemde tijd geen beweging is, nemen we aan dat er niemand
-		// in de kamer aanwezig is.
-		// Altijd een nieuwe timer starten
-		PIR1_PresenceTimer = createTimer(now.plusMinutes((GF_Presence_minutes1.state as Number).intValue)) [|
-			universalLock.lock()
-			try {
-				logInfo("pir_gf_achterdeur17","PIR1_PresenceTimer is afgelopen, lamp mag weer aan via PIR1")
-				GF_Presence.postUpdate(0) // er is niemand meer in de kamer
-			}
-			finally {
-				universalLock.unlock()
-			}
-		]
-		//DEBUG REGELTJE:
-		//postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
 	}
 	finally {
 		universalLock.unlock()
 	}
 end
 
-// Het daadwerkelijk schakelen van de lamp bij de achterdeur
-rule "Achterdeur_Schemerlamp"
-when
-	Item LightOnPir_Achterdeur_Schemerlamp changed
-then
-	if (LightOnPir_Achterdeur_Schemerlamp.state==1) {
-		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)
-		logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,ON)")
-	} else {
-		sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)
-		logInfo("rule Achterdeur_Schemerlamp","sendCommand(Light_GF_Huiskamer_Achterdeur_Schemerlamp,OFF)")
-	}
-end
-// tbv persistence number item zeten
+// tbv persistence number item zetten, alleen numbers kunnen in rrd4j
 rule "bg_w_tv_w"
 when
 	Item bg_w_tv_w changed
@@ -328,7 +298,7 @@ then
 		bg_w_tv_w_n.postUpdate(0)
 	}
 end
-// tbv persistence number item zeten
+// tbv persistence number item zetten, alleen numbers kunnen in rrd4j
 rule "bg_x_imac3"
 when
 	Item bg_x_imac3 changed
