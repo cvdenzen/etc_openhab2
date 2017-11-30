@@ -263,6 +263,10 @@ then
 	universalLock.lock() // om de test op null zijn van de timers te beveiligen
 	logDebug("pir_gf_achterdeur17","lock acquired")
 	try {
+		logDebug("PIR achterdeur licht aan","LichtIntensiteit_Woonkamer [{}], drempel=[{}]",LichtIntensiteit_Woonkamer.state.toString(),LightsOnIntensityThreshold.state)
+		logDebug("PIR achterdeur licht aan","tv [{}]",bg_w_tv_w_n.state.toString())
+		logDebug("PIR achterdeur licht aan","imac3 [{}]",bg_x_imac3_n.state.toString())
+		logDebug("PIR achterdeur licht aan","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state [{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state)
 		if (
 			//(GF_Presence.state != 1) // er is niemand in de kamer
 			(LichtIntensiteit_Woonkamer != NULL)
