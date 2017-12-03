@@ -12,11 +12,11 @@ Terminal, ssh pi@192.168.2.9
 cd ~/gitrepos/etc_openhab2
 su
 git pull
-cp -a * /etc/openhab2
+cp -a openhab2/* /etc/openhab2
 
 I edit the /etc/openhab2 files (on openhab2 server, raspberry) and then
 in ~/gitrepos/etc_openhab2 directory.
-cp -a /etc/openhab2 . in
+cp -a /etc/openhab2 .
 git add *
 git commit
 git push

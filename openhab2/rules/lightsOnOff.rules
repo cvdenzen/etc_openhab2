@@ -108,6 +108,7 @@ end
 
 
 rule "LightsOn_Sensor"
+// De sensor is de lichtmetingssensor, niet de pir sensor
 when
 	Item LichtIntensiteit_Woonkamer changed
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
@@ -253,7 +254,7 @@ when
 then
 	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
 	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
-	logDebug("pir_gf_achterdeur17","Het is erg licht [{}], drempel=[{}]",LichtIntensiteit_Woonkamer.state.toString(),LightsOnIntensityThreshold.state)
+	logDebug("pir_gf_achterdeur17","Huiskamer lichtintensiteit [{}], drempel=[{}]",LichtIntensiteit_Woonkamer.state.toString(),LightsOnIntensityThreshold.state)
 	logDebug("pir_gf_achterdeur17","LichtIntensiteit_Woonkamer.state.toString()=[{}], LightsOnIntensityThreshold.state=[{}]",
 		LichtIntensiteit_Woonkamer.state.toString(),
 		LightsOnIntensityThreshold.state
@@ -274,7 +275,7 @@ then
 			&& ((LichtIntensiteit_Woonkamer.state as Number)<(LightsOnIntensityThreshold.state as Number))
 			&& ((bg_w_tv_w_n.state as Number)==0) // tv staat uit
 			&& ((bg_x_imac3_n.state as Number)==0) // iMac3 staat uit
-			&& (Light_GF_Huiskamer_Achterdeur_Schemerlamp.state==0) // alleen als hij nu uit is
+			&& (Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number==0) // alleen als hij nu uit is
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)
