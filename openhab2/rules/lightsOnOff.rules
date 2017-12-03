@@ -262,7 +262,7 @@ then
 	logDebug("pir_gf_achterdeur17","bg_w_tv_w_n.state=[{}]",bg_w_tv_w_n.state)
 	logDebug("pir_gf_achterdeur17","bg_x_imac3_n.state as Number=[{}]",bg_x_imac3_n.state)
 	logDebug("pir_gf_achterdeur17","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state=[{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state)
-	universalLock.lock() // om de test op null zijn van de timers te beveiligen
+	//universalLock.lock() // om de test op null zijn van de timers te beveiligen
 	logDebug("pir_gf_achterdeur17","lock acquired")
 
 //	try {
