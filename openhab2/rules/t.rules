@@ -1,5 +1,4 @@
-import org.openhab.core.library.types.*
-import java.util.*
+import java.util.Calendar;
 
 var java.util.Calendar calendar = java.util.Calendar.getInstance()
 
