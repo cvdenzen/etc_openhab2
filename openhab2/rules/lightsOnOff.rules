@@ -9,6 +9,7 @@ var ReentrantLock universalLock=new ReentrantLock()
 var boolean inInitialisationPhase = true
 var Timer initialisationPhaseTimer = null
 var Timer PIR1_PassengerTimer = null
+var Timer PIR1_PresenceTimer = null
 var ReentrantLock initLock=new ReentrantLock()
 
 rule "Initialisaties"
@@ -285,6 +286,30 @@ then
 		}
 		// er was beweging, dus er is iemand
 		GF_Presence.postUpdate(1)
+        if (PIR1_PresenceTimer!=null) {
+                // in try clause, want PIR1_PresenceTimer kan inmiddels null geworden zijn
+                try {
+                        PIR1_PresenceTimer.cancel()
+                }
+                finally {
+                       logDebug("pir_gf_achterdeur17","PIR1_PresenceTimer.cancel() uitgevoerd")
+                 }
+        }
+        // Als er binnen de hieronder genoemde tijd geen beweging is, nemen we aan dat er niemand
+        // in de kamer aanwezig is.
+        // Altijd een nieuwe timer starten
+        PIR1_PresenceTimer = createTimer(now.plusMinutes((GF_Presence_minutes1.state as Number).intValue)) [|
+                 universalLock.lock()
+               try {
+                       logInfo("pir_gf_achterdeur17","PIR1_PresenceTimer is afgelopen, lamp mag weer aan via PIR1")
+                         GF_Presence.postUpdate(0) // er is niemand meer in de kamer
+                 }
+                finally {
+                        universalLock.unlock()
+                }
+        ]
+         //DEBUG REGELTJE:
+        //postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
 	}
 	finally {
 		universalLock.unlock()
