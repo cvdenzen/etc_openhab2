@@ -270,6 +270,7 @@ then
 		logDebug("PIR achterdeur licht aan","imac3 [{}]",bg_x_imac3_n.state.toString())
 		logDebug("PIR achterdeur licht aan","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state [{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state)
 		logDebug("PIR achterdeur licht aan","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number [{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number)
+/*
 		if (
 			//(GF_Presence.state != 1) // er is niemand in de kamer
 			(LichtIntensiteit_Woonkamer != NULL)
@@ -303,7 +304,7 @@ then
         // Altijd een nieuwe timer starten
         logDebug("pir_gf_achterdeur17","create new PIR1_PresenceTimer")
         PIR1_PresenceTimer = createTimer(now.plusMinutes((GF_Presence_minutes1.state as Number).intValue)) [|
-                 universalLock.lock()
+               universalLock.lock()
                try {
                        logInfo("pir_gf_achterdeur17","PIR1_PresenceTimer is afgelopen, lamp mag weer aan via PIR1")
                          GF_Presence.postUpdate(0) // er is niemand meer in de kamer
@@ -314,6 +315,7 @@ then
         ]
          //DEBUG REGELTJE:
         //postUpdate(LightOnPir_Achterdeur_Schemerlamp,1)
+*/
 	}
 	finally {
 		universalLock.unlock()
