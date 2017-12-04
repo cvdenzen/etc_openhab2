@@ -1,13 +1,13 @@
 astro:sun:home  [ geolocation="52.070497,4.300699", interval=60]
 astro:moon:home [ geolocation="52.070497,4.300699", interval=60]
-# The latitude
-# Den Haag
-#astro:latitude=52.0704978
+// The latitude
+// Den Haag
+//astro:latitude=52.0704978
 
-# The longitude
-#astro:longitude=4.3006999
+// The longitude
+//astro:longitude=4.3006999
 
-# Refresh interval for azimuth and elevation calculation in seconds
-# (optional, defaults to disabled)
-#astro:interval=57
+// Refresh interval for azimuth and elevation calculation in seconds
+// (optional, defaults to disabled)
+//astro:interval=57
 

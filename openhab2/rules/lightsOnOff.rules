@@ -10,7 +10,6 @@ var boolean inInitialisationPhase = true
 var Timer initialisationPhaseTimer = null
 var Timer PIR1_PassengerTimer = null
 var Timer PIR1_PresenceTimer = null
-var ReentrantLock initLock=new ReentrantLock()
 
 rule "Initialisaties"
 when
@@ -256,8 +255,9 @@ then
 	if (inInitialisationPhase) {
 		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar iniInitialisationPhase, dus geen verdere actie")
 		return;
+	} else {
+		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
 	}
-	logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
 	// Als het donkerder is dan de threshold, dan het licht even aandoen, liefst markeren dat wij het zijn in variabele? array?
 	logDebug("pir_gf_achterdeur17","Huiskamer lichtintensiteit [{}], drempel=[{}]",LichtIntensiteit_Woonkamer.state.toString(),LightsOnIntensityThreshold.state)
 	logDebug("pir_gf_achterdeur17","LichtIntensiteit_Woonkamer.state.toString()=[{}], LightsOnIntensityThreshold.state=[{}]",
