@@ -25,7 +25,8 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Setpoint item=GF_Presence minValue=0 maxValue=1 step=1 
 		Setpoint item=GF_Passenger minValue=0 maxValue=1 step=1 
 	}
-	Frame label="Grafieken" {
+	//Frame label="Grafieken" {
+	Frame {
 	Chart item=LichtIntensiteit_Woonkamer service="rrd4j" label="Lichtintensiteit woonkamer"
     Chart item=chart3 service="rrd4j"
 	//Chart item=bg_w_pir_w_n label="Beweging achterdeur Begane Grond" service="rrd4j"
