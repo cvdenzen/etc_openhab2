@@ -4,8 +4,8 @@ Voorbeeld voor exec binding.
 Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
 */
 
-Group item=LightSensor label="Lichtmeter"
-Group item=chart1 label="Chart"
+Group LightSensor "Lichtmeter"
+Group chart1 "Chart"
 /* zie lightsOnOff.rules: daar worden vars die in group gInitializeZero zitten op 0 gezet indien niet geinit */
 Group gInitializeZero "Variabelen die op 0 mogen worden geinitialisseerd als ze null zijn"
 // Fysieke sensor
