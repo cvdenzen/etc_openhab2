@@ -1,6 +1,6 @@
 Contact pir_gf_achterdeur "PIR [%s]" { gpio="pin:0 activelow:no force:yes" }
 Contact pir_gf_achterdeur27 "PIR27 [%s]" (chart1){ gpio="pin:27 activelow:no force:yes" }
-Group chart3 "Chart3"
+Group item=chart3 label="Chart3"
 
 Contact pir_gf_achterdeur17 "PIR17 [%s]" { gpio="pin:17 activelow:no force:yes" }
 // pir tbv persistence
