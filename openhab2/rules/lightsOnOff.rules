@@ -350,11 +350,12 @@ then
 	}
 end
 // Achterdeur licht aan/uit als hue lamp aan/uitgaat of zo (experimenteel 17 december 2017)
-rule "gf_achterdeur_from_hue_dimswitch ON"
+rule "gf_achterdeur_from_hue_dimswitch ON OR OFF"
 when
 	Item huelamp3_Toggle changed
 then
-	Light_GF_Huiskamer_Achterdeur_Schemerlamp.sendCommand(huelamp3_Toggle.state)
+	//Dit werkt maar vindt Hester niet handig. Light_GF_Huiskamer_Achterdeur_Schemerlamp.sendCommand(huelamp3_Toggle.state)
+	logInfo("gf_achterdeur_from_hue_dimswitch ON OR OFF","huelamp3_Toggle changed to {}",huelamp3_Toggle.state)
 end
 // tbv persistence number item zeten
 rule "pir_gf_achterdeur17"
