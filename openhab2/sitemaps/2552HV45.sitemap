@@ -25,6 +25,18 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Setpoint item=GF_Presence minValue=0 maxValue=1 step=1 
 		Setpoint item=GF_Passenger minValue=0 maxValue=1 step=1 
 	}
+	Frame label="Hue lampen" {
+		// Bulb2
+		Switch		item=		huelamp1_Toggle
+		Slider		item=		huelamp1_Dimmer
+		Slider		item=		huelamp1_ColorTemp
+		Switch		item=		huelamp2_Toggle
+		Slider		item=		huelamp2_Dimmer
+		Slider		item=		huelamp2_ColorTemp
+		Switch		item=		huelamp3_Toggle
+		Slider		item=		huelamp3_Dimmer
+		Slider		item=		huelamp3_ColorTemp
+	}
 	//Frame label="a1" {
 	//	Chart item=LichtIntensiteit_Woonkamer  label="Lichtintensiteit woonkamer"
 	//}

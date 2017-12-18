@@ -1,1 +1,5 @@
-Bridge hue:bridge:1 [ ipAddress="192.168.2.22", userName="hEuGBwutLFe4ygKhCb56aLx9ukIG8nTFY1Ow3gHa" ]
+Bridge hue:bridge:1 [ ipAddress="192.168.2.22", userName="hEuGBwutLFe4ygKhCb56aLx9ukIG8nTFY1Ow3gHa" ] {
+	0220 huelamp1 [ lightId="1" ]
+    0220 huelamp2 [ lightId="2" ]
+    0220 huelamp3 [ lightId="3" ]
+}

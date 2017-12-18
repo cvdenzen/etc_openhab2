@@ -11,3 +11,18 @@ Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lig
 Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 off]"}
 /* Als de output pin voor de 433 MHz zender niet wordt geinitialiseerd, zend de zender rommel uit en dat stoort de werking van de normale afstandsbediening van klik-aaqn-klik-uit */
 Switch Switch_433_dummy "Dummy Switch tbv 433MHz output pin" { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 3 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 3 off]"}
+
+/* Hue lampen 18 december 2017 */
+
+Switch	huelamp1_Toggle		{ channel="hue:0220:1:huelamp1:brightness" }
+Dimmer	huelamp1_Dimm		{ channel="hue:0220:1:huelamp1:brightness" }
+Dimmer	huelamp1_ColorTemp	{ channel="hue:0220:1:huelamp1:color_temperature" }
+
+
+Switch	huelamp2_Toggle		{ channel="hue:0220:1:huelamp2:brightness" }
+Dimmer	huelamp2_Dimm		{ channel="hue:0220:1:huelamp2:brightness" }
+Dimmer	huelamp2_ColorTemp	{ channel="hue:0220:1:huelamp2:color_temperature" }
+
+Switch	huelamp3_Toggle		{ channel="hue:0220:1:huelamp3:brightness" }
+Dimmer	huelamp3_Dimm		{ channel="hue:0220:1:huelamp3:brightness" }
+Dimmer	huelamp3_ColorTemp	{ channel="hue:0220:1:huelamp3:color_temperature" }
