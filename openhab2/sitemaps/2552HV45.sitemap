@@ -36,6 +36,9 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Switch		item=		huelamp3_Toggle
 		Slider		item=		huelamp3_Dimmer
 		Slider		item=		huelamp3_ColorTemp
+		Setpoint item=huelamp3_Dimmer minValue=0 maxValue=2 step=1
+		Setpoint item=huelamp3_Dimmer minValue=50 maxValue=52 step=1
+		Setpoint item=huelamp3_Dimmer minValue=97 maxValue=100 step=1
 	}
 	//Frame label="a1" {
 	//	Chart item=LichtIntensiteit_Woonkamer  label="Lichtintensiteit woonkamer"
