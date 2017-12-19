@@ -2,6 +2,7 @@ Group All
 /* GF staat voor Ground Floor, oftewel Begane Grond */
 Group gGF (All)
 Group GF_Huiskamer "Huiskamer" <switch> (gGF)
+Group GF_Huiskamer_eettafel "Huiskamer eettafel" <switch> (gGF)
 
 /* active groups */
 Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
@@ -14,15 +15,15 @@ Switch Switch_433_dummy "Dummy Switch tbv 433MHz output pin" { exec=">[ON:sudo /
 
 /* Hue lampen 18 december 2017 */
 
-Switch	huelamp1_Toggle		{ channel="hue:0220:1:huelamp1:brightness" }
+Switch	huelamp1_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp1:brightness" }
 Dimmer	huelamp1_Dimm		{ channel="hue:0220:1:huelamp1:brightness" }
 Dimmer	huelamp1_ColorTemp	{ channel="hue:0220:1:huelamp1:color_temperature" }
 
 
-Switch	huelamp2_Toggle		{ channel="hue:0220:1:huelamp2:brightness" }
+Switch	huelamp2_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp2:brightness" }
 Dimmer	huelamp2_Dimm		{ channel="hue:0220:1:huelamp2:brightness" }
 Dimmer	huelamp2_ColorTemp	{ channel="hue:0220:1:huelamp2:color_temperature" }
 
-Switch	huelamp3_Toggle		{ channel="hue:0220:1:huelamp3:brightness" }
+Switch	huelamp3_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp3:brightness" }
 Dimmer	huelamp3_Dimm		{ channel="hue:0220:1:huelamp3:brightness" }
 Dimmer	huelamp3_ColorTemp	{ channel="hue:0220:1:huelamp3:color_temperature" }
