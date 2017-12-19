@@ -2,7 +2,7 @@ Group All
 /* GF staat voor Ground Floor, oftewel Begane Grond */
 Group gGF (All)
 Group GF_Huiskamer "Huiskamer" <switch> (gGF)
-Group GF_Huiskamer_eettafel "Huiskamer eettafel" <switch> (gGF)
+Group GF_Huiskamer_eettafel "Huiskamer eettafel" <switch> (GF_Huiskamer_eettafel)
 
 /* active groups */
 Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
