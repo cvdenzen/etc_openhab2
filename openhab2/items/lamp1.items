@@ -5,7 +5,7 @@ Group GF_Huiskamer "Huiskamer" <switch> (gGF)
 
 /* active groups */
 Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
-Group:Switch:OR(ON, OFF) GF_Huiskamer_eettafel "Huiskamer eettafel [(%d)]"
+Group:Switch:OR(ON, OFF) GF_Huiskamer_eettafel "Huiskamer eettafel"
 
 /* Verlichting */
 Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
