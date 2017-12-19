@@ -54,6 +54,14 @@ then
 	      createTimer(now.plusSeconds(45)) [|
 		
 		  logInfo(	"Initializer", "... initializing!")
+		  // Ik word niet goed van dat Openhab onduidelijke gedoe met vage objecten en vage syntax.
+		  huelamp1_Toggle.state=OFF
+		  huelamp2_Toggle.state=OFF
+		  huelamp3_Toggle.state=OFF
+		  huelamp1_ColorTemp.state=0
+		  huelamp1_ColorTemp.state=0
+		  huelamp1_ColorTemp.state=0
+		  
 		  //Wir warten 45 Sekunden, dann initalisieren wir alle die nicht aus der Datenbank befüllt wurden
 		  gInitializeZero.members.filter( x | x.state == NULL).forEach[ item |
 			
