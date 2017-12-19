@@ -15,15 +15,15 @@ Switch Switch_433_dummy "Dummy Switch tbv 433MHz output pin" { exec=">[ON:sudo /
 
 /* Hue lampen 18 december 2017 */
 
-Switch	huelamp1_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp1:brightness" }
-Dimmer	huelamp1_Dimm		{ channel="hue:0220:1:huelamp1:brightness" }
-Dimmer	huelamp1_ColorTemp	{ channel="hue:0220:1:huelamp1:color_temperature" }
+Switch	huelamp1_Toggle		(GF_Huiskamer_eettafel, Lights,gInitializeZero) { channel="hue:0220:1:huelamp1:brightness" }
+Dimmer	huelamp1_Dimm		(gInitializeZero) { channel="hue:0220:1:huelamp1:brightness" }
+Dimmer	huelamp1_ColorTemp	(gInitializeZero) { channel="hue:0220:1:huelamp1:color_temperature" }
 
 
-Switch	huelamp2_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp2:brightness" }
-Dimmer	huelamp2_Dimm		{ channel="hue:0220:1:huelamp2:brightness" }
-Dimmer	huelamp2_ColorTemp	{ channel="hue:0220:1:huelamp2:color_temperature" }
+Switch	huelamp2_Toggle		(GF_Huiskamer_eettafel, Lights,gInitializeZero) { channel="hue:0220:1:huelamp2:brightness" }
+Dimmer	huelamp2_Dimm		(gInitializeZero) { channel="hue:0220:1:huelamp2:brightness" }
+Dimmer	huelamp2_ColorTemp	(gInitializeZero) { channel="hue:0220:1:huelamp2:color_temperature" }
 
-Switch	huelamp3_Toggle		(GF_Huiskamer_eettafel, Lights) { channel="hue:0220:1:huelamp3:brightness" }
-Dimmer	huelamp3_Dimm		{ channel="hue:0220:1:huelamp3:brightness" }
-Dimmer	huelamp3_ColorTemp	{ channel="hue:0220:1:huelamp3:color_temperature" }
+Switch	huelamp3_Toggle		(GF_Huiskamer_eettafel, Lights,gInitializeZero) { channel="hue:0220:1:huelamp3:brightness" }
+Dimmer	huelamp3_Dimm		(gInitializeZero) { channel="hue:0220:1:huelamp3:brightness" }
+Dimmer	huelamp3_ColorTemp	(gInitializeZero) { channel="hue:0220:1:huelamp3:color_temperature" }
