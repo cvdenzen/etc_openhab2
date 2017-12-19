@@ -5,6 +5,7 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Switch item=Lights mappings=[OFF="Uit",ON="Aan"]
 		Switch item=Light_GF_Huiskamer_Achterdeur_Schemerlamp mappings=[OFF="Uit",ON="Aan"]
 		Switch item=Light_GF_Huiskamer_Achter_Staandelamp mappings=[OFF="Uit",ON="Aan"]
+		Switch item=GF_Huiskamer_eettafel mappings=[OFF="Uit",ON="Aan"]
 		Text item=bg_w_tv_w
 		Text item=bg_x_imac3
         //        Text item=pir_gf_achterdeur
@@ -36,9 +37,6 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Switch		item=		huelamp3_Toggle
 		Slider		item=		huelamp3_Dimm
 		Slider		item=		huelamp3_ColorTemp
-		Setpoint item=huelamp3_Dimm minValue=0 maxValue=2 step=1
-		Setpoint item=huelamp3_Dimm minValue=50 maxValue=52 step=1
-		Setpoint item=huelamp3_Dimm minValue=97 maxValue=100 step=1
 	}
 	//Frame label="a1" {
 	//	Chart item=LichtIntensiteit_Woonkamer  label="Lichtintensiteit woonkamer"
