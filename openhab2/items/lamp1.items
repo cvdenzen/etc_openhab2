@@ -2,10 +2,10 @@ Group All
 /* GF staat voor Ground Floor, oftewel Begane Grond */
 Group gGF (All)
 Group GF_Huiskamer "Huiskamer" <switch> (gGF)
-Group GF_Huiskamer_eettafel "Huiskamer eettafel" <switch> (GF_Huiskamer_eettafel)
 
 /* active groups */
 Group:Switch:OR(ON, OFF) Lights "Alle lampen [(%d)]"
+Group:Switch:OR(ON, OFF) GF_Huiskamer_eettafel "Huiskamer eettafel [(%d)]"
 
 /* Verlichting */
 Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
