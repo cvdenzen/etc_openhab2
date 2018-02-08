@@ -10,7 +10,9 @@ Group:Switch:OR(ON, OFF) GF_Huiskamer_eettafel "Huiskamer eettafel"
 /* Verlichting */
 Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 1 off]"}
 Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 2 off]"}
+Switch Light_GF_Huiskamer_Achter_Staandelamp_pilight "Staande lamp pilight"  (GF_Huiskamer, Lights) {pilight="kaku#kaku_switch_old"}
 /* Als de output pin voor de 433 MHz zender niet wordt geinitialiseerd, zend de zender rommel uit en dat stoort de werking van de normale afstandsbediening van klik-aaqn-klik-uit */
+/* Update 20180208: I soldered a 1k resistance between the 433MHz sender data pin and ground. That should make dummy switch unnecessary */
 Switch Switch_433_dummy "Dummy Switch tbv 433MHz output pin" { exec=">[ON:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 3 on] >[OFF:sudo /home/pi/projects/klikaanklikuit_flask/tmp/lights/kaku_lock.sh D 3 off]"}
 
 /* Hue lampen 18 december 2017 */
