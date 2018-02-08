@@ -13,7 +13,9 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
                 Text item=pir_gf_achterdeur17
  //  mappings=[OFF="Uit",ON="Aan"] niet nodig of zo
 	}
-	Group item=LightSensor
+	Frame label="Lichtsensor" {
+		Group item=LightSensor
+	}
 	Frame label="Zon" {
 		Text item=Sunrise_Time
 		Text item=Sunset_Time
