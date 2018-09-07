@@ -29,15 +29,15 @@ then
 			logDebug("Initialisaties","initialisationPhaseTimer finished")
 			logDebug("Initialisaties","LightsOnIntensityThreshold="+ LightsOnIntensityThreshold.toString())
 			logDebug("Initialisaties","initialisationPhaseTimer finished, threshold logged to debug (like this message)")
-			if ((LightsOnIntensityThreshold == null) || (LightsOnIntensityThreshold.state == NULL)) {
+			if ((LightsOnIntensityThreshold === null) || (LightsOnIntensityThreshold.state == NULL)) {
 				postUpdate(LightsOnIntensityThreshold,18)
 				logDebug("Initialisaties","LightsOnIntensityThreshold was null or NULL, set to 18")
 			}
-			if ((LightsEnableIntensityThreshold == null) || (LightsEnableIntensityThreshold.state == NULL)) {
+			if ((LightsEnableIntensityThreshold === null) || (LightsEnableIntensityThreshold.state == NULL)) {
 				postUpdate(LightsEnableIntensityThreshold,88)
 				logDebug("Initialisaties","LightsEnableIntensityThreshold was null or NULL, set to 88")
 			}
-			if ((AutoOnEnabled == null) || (AutoOnEnabled.state == NULL)) {
+			if ((AutoOnEnabled === null) || (AutoOnEnabled.state == NULL)) {
 				postUpdate(AutoOnEnabled,0)
 				logDebug("Initialisaties","AutoOnEnabled was null or NULL, set to {}",AutoOnEnabled.state)
 			}
@@ -126,14 +126,14 @@ then
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
-		if (initialisationPhaseTimer == null ) {
+		if (initialisationPhaseTimer === null ) {
 				logInfo("LightsOn_Sensor","initialisationPhaseTimer is null")
 				// Init de waardes als ze niet door persistence zijn geinit
-				if (LightsOnIntensityThreshold == null) {
+				if (LightsOnIntensityThreshold === null) {
 					logInfo("LightsOn_Sensor","LightsOnIntensityThreshold is null")
 					postUpdate(LightsOnIntensityThreshold,17)
 				}
-				if (LightsEnableIntensityThreshold == null) {
+				if (LightsEnableIntensityThreshold === null) {
 					logInfo("LightsOn_Sensor","LightsEnableIntensityThreshold is null")
 					postUpdate(LightsEnableIntensityThreshold,197)
 				}
@@ -192,7 +192,7 @@ then
 	try {
 		postUpdate(AutoOnEnabled,1)
 		logInfo("Enable lights on","AutoOnEnabled op 1 gezet")
-		if (backoffTimer!=null) {
+		if (backoffTimer!==null) {
 			logInfo("Enable lights on","cancel backoffTimer")
 			backoffTimer.cancel()
 			logInfo("Enable lights on","backoffTimer gecancelled")
@@ -232,7 +232,7 @@ then
 		) {
 			logInfo("Enable lights on","Het is erg licht [{}], drempel=[{}] en de automaat mag weer aan.",LichtIntensiteit_Woonkamer.state.toString(),LightsEnableIntensityThreshold.state)
 			postUpdate(AutoOnEnabled,1)
-			if ( backoffTimer !=null) {
+			if ( backoffTimer !==null) {
 				backoffTimer.cancel()
 				backoffTimer=null
 			}
@@ -303,7 +303,7 @@ then
 		// er was beweging, dus er is iemand
 		GF_Presence.postUpdate(1)
         logDebug("pir_gf_achterdeur17","PIR1_PresenceTimer.cancel() uitvoeren if timer exists")
-        if (PIR1_PresenceTimer!=null) {
+        if (PIR1_PresenceTimer!==null) {
                 // in try clause, want PIR1_PresenceTimer kan inmiddels null geworden zijn
                 try {
                         PIR1_PresenceTimer.cancel()
