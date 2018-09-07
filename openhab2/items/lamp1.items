@@ -9,13 +9,18 @@ Group:Switch:OR(ON, OFF) GF_Huiskamer_eettafel "Huiskamer eettafel"
 
 /* Verlichting */
 /* Deze Switch wordt alleen via mqtt gestuurd. Het wijzigen van de status van de Switch moet altijd via mqtt gebeuren.
-blah/cmd voor het actief aansturen door openhab van de lamp. Dan wordt pilight aangestuurd om het commando naar de lamp te sturen.
-blah/rc is afkomstig van de remote control->receiver->pilight en dan gaan we ervan uit dat de lamp gereageerd heeft.
-blah/state is afkomstig van de camel logic die de cmd en rc vertaalt naar state berichten (als notificatie)
-Ik heb nog geen idee hoe je vanaf de openhab gui de lamp moet bedienen. Of toch wel, via >mqtt cmd, maar dan gaat het rondzingen!
+Voorbeelden:
+f0/kaku_switch_old/rc/3/0 on
+f0/kaku_switch_old/state/3/0 on
+
+rc is afkomstig van de remote control->receiver->pilight
+status: dit topic wordt door pilight aangemaakt en is bedoeld om de status van de lamp in openhab te updaten.
+cmd voor het actief aansturen van de lamp. Dan wordt pilight aangestuurd om het commando naar de lamp te sturen. Dat mag alleen opgepakt worden door pilight (die dan reageert met een status).
 */
-Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) {mqtt="<[broker:f0/kaku_switch_old/state/3/0:state:on:1],<[broker:f0/kaku_switch_old/state/3/0:state:off:0],>[broker:f0/kaku_switch_old/cmd/3/0:command:ON:on],>[broker:f0/kaku_switch_old/cmd/3/0:command:OFF:off]"}
-Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) {mqtt="<[broker:f0/kaku_switch_old/state/3/1:state:on:1],<[broker:f0/kaku_switch_old/state/3/1:state:off:0], >[broker:f0/kaku_switch_old/cmd/3/1:command:ON:on],>[broker:f0/kaku_switch_old/cmd/3/1:command:OFF:off]"}
+
+Switch Light_GF_Huiskamer_Achterdeur_Schemerlamp "Achterdeur" (GF_Huiskamer, Lights) {mqtt="<[broker:f0/kaku_switch_old/state/3/0:state:MAP(pilight.map)],>[broker:f0/kaku_switch_old/cmd/3/0:command:ON:on],>[broker:f0/kaku_switch_old/cmd/3/0:command:OFF:off]"}
+
+Switch Light_GF_Huiskamer_Achter_Staandelamp "Staande lamp" (GF_Huiskamer, Lights) {mqtt="<[broker:f0/kaku_switch_old/state/3/1:state:MAP(pilight.map)],>[broker:f0/kaku_switch_old/cmd/3/1:command:ON:on],>[broker:f0/kaku_switch_old/cmd/3/1:command:OFF:off]"}
 
 /* Hue lampen 18 december 2017 */
 
