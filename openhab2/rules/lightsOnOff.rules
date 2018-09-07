@@ -98,18 +98,6 @@ then
 end
 
 //
-// Eettafel lampen
-//
-rule "lightsOff_eettafel"
-when
-	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
-	Time cron "11 56 23 ? * MON,TUE,WED,THU,FRI"
-	or
-	Time cron "15 54 1 ? * SUN,MON"
-then
-	GF_Huiskamer_eettafel.sendCommand(OFF)
-end
-//
 // Lees elke 10 seconden de lichtsensor en store de waarde in het item LichtIntensiteit_Woonkamer
 // Reden: als de client (op een mobiel, tablet, etc.) draait, vraagt hij geregeld (elke 10 seconden of zo)
 // de waarde op. Om te voorkomen dat er steeds een meting wordt gedaan, moet de fysieke waarde (gekoppeld
