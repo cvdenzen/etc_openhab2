@@ -10,11 +10,11 @@ git push
 Connect to openhab system (raspberry):
 Terminal, ssh pi@192.168.2.9
 cd ~/gitrepos/etc_openhab2
-su
+sudo -s -u openhab
 (of git clone https://github.com/cvdenzen/etc_openhab2.git)
 git pull
 cp -a openhab2/* /etc/openhab2
-service openhab2 restart
+service openhab2 restart (niet nodig, ziet openhab vanzelf?)
 
 I edit the /etc/openhab2 files (on openhab2 server, raspberry) and then
 in ~/gitrepos/etc_openhab2 directory.
