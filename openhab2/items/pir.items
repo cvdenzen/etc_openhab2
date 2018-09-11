@@ -1,6 +1,6 @@
 Group chart3 "Chart3"
 
-Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nww/pir:state:MAP(gpioDigital.map)]" }
+Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nnw/pir:state:MAP(gpioDigital.map)]" }
 // pir tbv persistence
 Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3)
 // de tv op begane grond, west, tv, west
