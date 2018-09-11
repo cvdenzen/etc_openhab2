@@ -6,5 +6,6 @@
         <feature>openhab-persistence-mapdb</feature>
         <feature>openhab-persistence-rrd4j</feature>
         <feature>openhab-binding-mqtt1</feature>
+        <feature>openhab-binding-ntp</feature>
     </feature>
 </features>

@@ -1,8 +1,6 @@
-Contact pir_gf_achterdeur "PIR [%s]" { gpio="pin:0 activelow:no force:yes" }
-Contact pir_gf_achterdeur27 "PIR27 [%s]" (chart1){ gpio="pin:27 activelow:no force:yes" }
 Group chart3 "Chart3"
 
-Contact pir_gf_achterdeur17 "PIR17 [%s]" { gpio="pin:17 activelow:no force:yes" }
+Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nww/pir:state:MAP(gpioDigital.map)]" }
 // pir tbv persistence
 Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3)
 // de tv op begane grond, west, tv, west
