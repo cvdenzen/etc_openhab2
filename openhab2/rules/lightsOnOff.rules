@@ -41,10 +41,6 @@ then
 				postUpdate(AutoOnEnabled,0)
 				logDebug("Initialisaties","AutoOnEnabled was null or NULL, set to {}",AutoOnEnabled.state)
 			}
-			//postUpdate(AutoOnEnabled,1) // tijdelijk
-			// om de 433 MHz zender pin als output te configureren, anders gaat de zender onbedoeld uitzenden en de kaku storen
-			sendCommand(Switch_433_dummy,ON)
-			logDebug("Initialisaties","SendCommand(Switch_433_dummy,ON) uitgevoerd")
 			initialisationPhaseTimer = null
 			inInitialisationPhase = false
 		]
