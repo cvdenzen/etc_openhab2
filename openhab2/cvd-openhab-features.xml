@@ -2,10 +2,12 @@
 <!-- describes features I want installed -->
 <features name="pilightmqttosgixml" xmlns="http://karaf.apache.org/xmlns/features/v1.3.0">
     <feature name="pilightmqttosgi">
+        <feature>openhab-runtime-compat1x</feature>
         <feature>openhab-binding-hue</feature>
         <feature>openhab-transformation-map</feature>
         <feature>openhab-persistence-mapdb</feature>
         <feature>openhab-persistence-rrd4j</feature>
+        <feature>openhab-persistence-jdbc-derby</feature>
         <feature>openhab-binding-mqtt1</feature>
         <feature>openhab-binding-ntp</feature>
         <feature>openhab-binding-astro</feature>
