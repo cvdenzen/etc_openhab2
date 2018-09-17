@@ -153,7 +153,7 @@ then
 				postUpdate(AutoOnEnabled,1)
 			]
 		} else {
-			logInfo("LightsOn_Sensor","Het is niet donker")
+			logDebug("LightsOn_Sensor","Het is niet donker")
 		}
 	}
 	finally {
