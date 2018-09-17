@@ -100,7 +100,7 @@ when
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
 	or Time cron "0/30 * * * * ?"
 then
-	// logDebug("LightsOn_Sensor","Start")
+	logDebug("LightsOn_Sensor","Start")
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
@@ -121,13 +121,13 @@ then
 		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
 		// volgende regel is een noodmaatregel
 		IntensiteitAverage = LichtIntensiteit_Woonkamer.state as DecimalType
-		// logDebug("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
-		// logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
+		logDebug("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+		logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
 		if (AutoOnEnabled.state==1) {
-			// logDebug("LightsOn_Sensor","AutoOnEnabled.state is 1")
+			logDebug("LightsOn_Sensor","AutoOnEnabled.state is 1")
 		}
 		if (AutoOnEnabled.state==0) {
-			// logDebug("LightsOn_Sensor","AutoOnEnabled.state is 0")
+			logDebug("LightsOn_Sensor","AutoOnEnabled.state is 0")
 		}
 		// logDebug("LightsOn_Sensor","IntensiteitAverage={}",IntensiteitAverage)
 		// logDebug("LightsOn_Sensor","LightsOnIntensityThreshold={}", LightsOnIntensityThreshold) // print ongeveer type=NumberItem State=19
@@ -152,6 +152,8 @@ then
 			backoffTimer = createTimer(now.plusMinutes(1200)) [| // 1200 minuten is 20 uur
 				postUpdate(AutoOnEnabled,1)
 			]
+		} else {
+			logInfo("LightsOn_Sensor","Het is niet donker")
 		}
 	}
 	finally {
