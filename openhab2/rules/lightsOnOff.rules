@@ -228,17 +228,7 @@ end
 rule "PIR achterdeur licht aan"
 when
 	// CLOSED betekent in principe bij activelow HI op de pin.
-	// En dat was ook zo, tot 2017-05-26 ca 23 uur.
-	// GPIO17 is fysiek pin 11, maar dat is ook GPIO0.
-	// Vanaf 2017-05-26 is het kennelijk weer GPIO0, hoewel eerst GPIO17 ook werkte (en
-	// toen was ook CLOSED bij HI).
-
-	// Vanaf 2017-05-26 23 uur:
-	// In openhab zie ik GPIO17, in raspbian zie ik gpio0 reageren op PIR.
-	// In openhab zie ik het verkeerdom gebeuren: beweging is OPEN, rust is CLOSED.
-	// In raspbian zie ik  pin 0 en dan is 1 actief.
-	// Ik word gek!
-	Item pir_gf_achterdeur17 changed to OPEN
+	Item pir_gf_achterdeur17 changed to CLOSED
 then
 	if (inInitialisationPhase) {
 		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar iniInitialisationPhase, dus geen verdere actie")
@@ -270,7 +260,7 @@ then
 			&& ((LichtIntensiteit_Woonkamer.state as Number)<(LightsOnIntensityThreshold.state as Number))
 			&& ((bg_w_tv_w_n.state as Number)==0) // tv staat uit
 			&& ((bg_x_imac3_n.state as Number)==0) // iMac3 staat uit
-			&& (Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number==0) // alleen als hij nu uit is
+			&& (Light_GF_Huiskamer_Achterdeur_Schemerlamp.state==OFF) // alleen als hij nu uit is
 		) {
 			logInfo("pir_gf_achterdeur17","Licht achterdeur gaat aan ivm pir activiteit")
 			GF_Passenger.postUpdate(1)

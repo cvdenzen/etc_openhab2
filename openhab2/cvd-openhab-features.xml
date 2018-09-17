@@ -11,5 +11,6 @@
         <feature>openhab-binding-mqtt1</feature>
         <feature>openhab-binding-ntp</feature>
         <feature>openhab-binding-astro</feature>
+        <feature>openhab-binding-network</feature> <!-- openhab2 network health binding -->
     </feature>
 </features>

@@ -1,0 +1,2 @@
+network:pingdevice:device_bg_x_imac3 [ hostname="192.168.2.109" ]
+network:pingdevice:device_bg_w_tv_w [ hostname="192.168.2.79" ]

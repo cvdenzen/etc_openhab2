@@ -11,9 +11,9 @@ Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3)
 // When off:
 // nc: connect to 192.168.2.79 port 23999 (tcp) failed: No route to host
 // nc -zv -w 20 192.168.2.109 23999 2>&1 | grep " connect to " | sed -e "s/.*onnection refused.*/ON/" -e "s/.*connect to.*/OFF/"
-Switch bg_w_tv_w "TV huiskamer [%3s]" { exec="<[/bin/sh@@-c@@nc -zv -w 20 192.168.2.79 23999 2>&1 | grep \" connect to \" | sed -e \"s/.*onnection refused.*/ON/\" -e \"s/.*connect to.*/OFF/\":30000:REGEX((.*))]"}
+Switch bg_w_tv_w "TV huiskamer [%3s]" { channel="network:pingdevice:device_bg_w_tv_w:online" }
 // tv tbv persistence, via rule
 Number bg_w_tv_w_n "TV huiskamer [%1d]" (chart3)
-Switch bg_x_imac3 "iMac3 [%3s]" { exec="<[/bin/sh@@-c@@nc -zv -w 20 192.168.2.109 23999 2>&1 | grep \" connect to \" | sed -e \"s/.*onnection refused.*/ON/\" -e \"s/.*connect to.*/OFF/\":30000:REGEX((.*))]"}
+Switch bg_x_imac3 "iMac3 [%3s]" { channel="network:pingdevice:device_bg_x_imac3:online" }
 // iMac3 tbv persistence, via rule
 Number bg_x_imac3_n "iMac3 [%1d]" (chart3)
