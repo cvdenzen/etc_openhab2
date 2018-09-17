@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- describes features I want installed -->
 <features name="pilightmqttosgixml" xmlns="http://karaf.apache.org/xmlns/features/v1.3.0">
-    <feature name="pilightmqttosgi">
+    <feature name="pilightmqttosgi" version="1.0.0.SNAPSHOT">
         <feature>openhab-runtime-compat1x</feature>
         <feature>openhab-binding-hue</feature>
         <feature>openhab-transformation-map</feature>
