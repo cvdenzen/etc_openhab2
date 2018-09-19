@@ -7,8 +7,7 @@ Strategies {
 }
 Items {
   pir_gf_achterdeur17 : strategy = everyChange,restoreOnStartup,everyHour
-  pir_gf_achterdeur17 : strategy = everyChange,restoreOnStartup,everyHour
-  pir_gf_achterdeur17 : strategy = everyChange,restoreOnStartup,everyHour
+  Light_GF_Huiskamer_Achter_Staandelamp : strategy = everyChange,restoreOnStartup,everyHour
   Light_GF_Huiskamer_Achterdeur_Schemerlamp : strategy = everyChange,restoreOnStartup,everyHour
   Sunrise_Time : strategy = everyChange,restoreOnStartup,everyHour
   Sunset_Time : strategy = everyChange,restoreOnStartup,everyHour
