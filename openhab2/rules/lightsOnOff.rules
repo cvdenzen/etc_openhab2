@@ -231,7 +231,7 @@ when
 	Item pir_gf_achterdeur17 changed to CLOSED
 then
 	if (inInitialisationPhase) {
-		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar iniInitialisationPhase, dus geen verdere actie")
+		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar inInitialisationPhase, dus geen verdere actie")
 		return;
 	} else {
 		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging)")
