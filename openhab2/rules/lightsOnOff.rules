@@ -253,7 +253,6 @@ then
 		logDebug("PIR achterdeur licht aan","tv [{}]",bg_w_tv_w_n.state.toString())
 		logDebug("PIR achterdeur licht aan","imac3 [{}]",bg_x_imac3_n.state.toString())
 		logDebug("PIR achterdeur licht aan","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state [{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state)
-		logDebug("PIR achterdeur licht aan","Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number [{}]",Light_GF_Huiskamer_Achterdeur_Schemerlamp.state as Number)
 		if (
 			//(GF_Presence.state != 1) // er is niemand in de kamer
 			(LichtIntensiteit_Woonkamer != NULL)
