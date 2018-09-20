@@ -101,6 +101,9 @@ when
 	or Time cron "0/30 * * * * ?"
 then
 	logDebug("LightsOn_Sensor","Start")
+	if (backoffLock === null) {
+		return;
+	}
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
