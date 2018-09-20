@@ -107,8 +107,8 @@ then
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
-		if (initialisationPhase == false ) {
-				logInfo("LightsOn_Sensor","initialisationPhase is false, return.")
+		if (inInitialisationPhase == false ) {
+				logInfo("LightsOn_Sensor","inInitialisationPhase is false, return.")
                 return;
 		}
 		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
