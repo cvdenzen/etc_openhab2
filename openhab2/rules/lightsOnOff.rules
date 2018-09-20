@@ -107,24 +107,16 @@ then
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
-		if (initialisationPhaseTimer === null ) {
-				logInfo("LightsOn_Sensor","initialisationPhaseTimer is null")
-				// Init de waardes als ze niet door persistence zijn geinit
-				if (LightsOnIntensityThreshold === null) {
-					logInfo("LightsOn_Sensor","LightsOnIntensityThreshold is null")
-					postUpdate(LightsOnIntensityThreshold,17)
-				}
-				if (LightsEnableIntensityThreshold === null) {
-					logInfo("LightsOn_Sensor","LightsEnableIntensityThreshold is null")
-					postUpdate(LightsEnableIntensityThreshold,197)
-				}
-				//postUpdate(AutoOnEnabled,1) // tijdelijk?
+		if (initialisationPhase == false ) {
+				logInfo("LightsOn_Sensor","initialisationPhase is false, return.")
+                return;
 		}
 		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
 		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
-		// volgende regel is een noodmaatregel
-		IntensiteitAverage = LichtIntensiteit_Woonkamer.state as DecimalType
-		logDebug("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+		// volgende regel is/was een noodmaatregel
+		logInfo("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+        IntensiteitAverage = LichtIntensiteit_Woonkamer.state as Number
+		logInfo("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
 		logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
 		if (AutoOnEnabled.state==1) {
 			logDebug("LightsOn_Sensor","AutoOnEnabled.state is 1")
