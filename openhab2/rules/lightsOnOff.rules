@@ -113,10 +113,10 @@ then
 		}
 		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
 		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
-		// volgende regel is/was een noodmaatregel
-		logInfo("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+		// volgende regel is/was een noodmaatregel, average werkt niet 20180920 oh2.3.0
+		//logInfo("LightsOn_Sensor","gemeten (ave) is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
         IntensiteitAverage = LichtIntensiteit_Woonkamer.state as Number
-		logInfo("LightsOn_Sensor","gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+		logDebug("LightsOn_Sensor","gemeten (now) is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
 		logDebug("LightsOn_Sensor","AutoOnEnabled.state={}",AutoOnEnabled.state)
 		if (AutoOnEnabled.state==1) {
 			logDebug("LightsOn_Sensor","AutoOnEnabled.state is 1")
