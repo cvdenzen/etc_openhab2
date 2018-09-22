@@ -107,7 +107,7 @@ when
 	or Time cron "0/30 * * * * ?"
 then
 	logInfo("LightsOn_Sensor","Start")
-	if (backoffLock === null) {
+	if (backoffLock == null) {
 	    logInfo("LightsOn_Sensor","Finish, backoffLock===null, early return")
 		return;
 	}
