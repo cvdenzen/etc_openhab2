@@ -15,6 +15,7 @@ rule "Initialisaties"
 when
 	System started
 then
+    logInfo("Initialisaties","Start")
 // even hardcoded 20160209
 	//			postUpdate(LightsOnIntensityThreshold,19)
 	//			postUpdate(LightsEnableIntensityThreshold,200)
@@ -64,6 +65,7 @@ then
 			postUpdate( item, 0)
 		]
 	]
+    logInfo("Initialisaties","Finish")
 end
 
 //rule "lightsOn_sunset"
@@ -79,7 +81,9 @@ when
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
 	Time cron "0 8 2 * * ?"
 then
+    logInfo("Start : rule lightsOff")
 	sendCommand(gGF,OFF)
+    logInfo("Finish: rule lightsOff")
 end
 
 //
@@ -90,7 +94,9 @@ when
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
 	Time cron "31 3 1 ? * TUE,WED,THU,FRI"
 then
+    logInfo("lightsOff_2","Start")
 	sendCommand(gGF,OFF)
+    logInfo("lightsOff_2","Finish")
 end
 
 rule "LightsOn_Sensor"
@@ -100,7 +106,7 @@ when
 	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag))
 	or Time cron "0/30 * * * * ?"
 then
-	logDebug("LightsOn_Sensor","Start")
+	logInfo("LightsOn_Sensor","Start")
 	if (backoffLock === null) {
 		return;
 	}
@@ -154,6 +160,7 @@ then
 	finally {
 		backoffLock.unlock()
 	}
+	logInfo("LightsOn_Sensor","Finish")
 end
 rule "Enable lights on by light sensor"
 when
@@ -161,7 +168,7 @@ when
 	//or Item Sunset_minus_1hour received update ON
 	// or Time cron "0/4 * * * * ?"
 then
-	logInfo("Enable lights on","Het is noon, zorg dat de lichten weer aan mogen als het donker wordt")
+	logInfo("Enable lights on by light sensor","Start")
 	backoffLock.lock()
 	logInfo("Enable lights on","Lock acquired")
 	try {
@@ -177,29 +184,14 @@ then
 	finally {
 		backoffLock.unlock()
 	}
-end
-//
-// debug average berekening
-rule "debug Average berekening"
-when
-	// seconds minuut uur dag (1-31) maand(1-12) dag (1-7 1=zondag, 7=zaterdag)), 0/2 mag ook: elke 2 minuten/seconden etc te starten bij 0
-	Time cron "1 * * * * ?"
-then
-		// 20170110 averageSince lijkt niet te werken, of syntax voor var heb ik fout
-		//logDebug("LightsOn_Sensor","A Gemiddelde over z mn meten")
-		//var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
-		//IntensiteitAverage = 255.2
-		//logDebug("LightsOn_Sensor","Gemiddelde over z mn meten")
-		//logDebug("LightsOn_Sensor","Gemiddelde over z mn gemeten is {}",IntensiteitAverage.toString())
-		//logDebug("LightsOn_Sensor","B Gemiddelde over z mn meten")
-		//logDebug("LightsOn_Sensor","Gemiddelde over z mn gemeten is {}, drempel is {}",IntensiteitAverage.toString(),LightsOnIntensityThreshold.state.toString())
+	logInfo("Enable lights on by light sensor","Finish")
 end
 // Enable het aanzetten als er erg veel licht is
 rule "Enable lights on by daylight"
 when
 	Item LichtIntensiteit_Woonkamer changed
 then
-	logInfo("Enable lights on","LichtIntensiteit_Woonkamer changed to [{}]",LichtIntensiteit_Woonkamer.state.toString())
+	logInfo("Enable lights on","Start, LichtIntensiteit_Woonkamer changed to [{}]",LichtIntensiteit_Woonkamer.state.toString())
 	backoffLock.lock()
 	try {
 		if (AutoOnEnabled.state==0 && (LichtIntensiteit_Woonkamer.state != NULL) 
@@ -218,6 +210,7 @@ then
 	finally {
 		backoffLock.unlock()
 	}
+	logInfo("Enable lights on","Finish, LichtIntensiteit_Woonkamer changed to [{}]",LichtIntensiteit_Woonkamer.state.toString())
 end
  // Als de pir sensor beweging ziet, dan de lichten bij de achterdeur aan (en na 5 minuten weer uit?)
 rule "PIR achterdeur licht aan"
@@ -225,6 +218,7 @@ when
 	// CLOSED betekent in principe bij activelow HI op de pin.
 	Item pir_gf_achterdeur17 changed to CLOSED
 then
+    logInfo("PIR achterdeur licht aan","Start")
 	if (inInitialisationPhase) {
 		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar inInitialisationPhase, dus geen verdere actie")
 		return;
@@ -297,6 +291,7 @@ then
 	finally {
 		universalLock.unlock()
 	}
+    logInfo("PIR achterdeur licht aan","Finish")
 end
 
 // tbv persistence number item zetten, alleen numbers kunnen in rrd4j
@@ -304,22 +299,26 @@ rule "bg_w_tv_w"
 when
 	Item bg_w_tv_w changed
 then
+    logInfo("bg_w_tv_w","Start")
 	if (bg_w_tv_w.state==ON) {
 		bg_w_tv_w_n.postUpdate(1)
 	} else {
 		bg_w_tv_w_n.postUpdate(0)
 	}
+    logInfo("bg_w_tv_w","Finish")
 end
 // tbv persistence number item zetten, alleen numbers kunnen in rrd4j
 rule "bg_x_imac3"
 when
 	Item bg_x_imac3 changed
 then
+    logInfo("bg_x_imac3","Start")
 	if (bg_x_imac3.state==ON) {
 		bg_x_imac3_n.postUpdate(1)
 	} else {
 		bg_x_imac3_n.postUpdate(0)
 	}
+    logInfo("bg_x_imac3","Finish")
 end
 // Achterdeur licht aan/uit als hue lamp aan/uitgaat of zo (experimenteel 17 december 2017)
 rule "gf_achterdeur_from_hue_dimswitch ON OR OFF"
@@ -334,10 +333,12 @@ rule "pir_gf_achterdeur17"
 when
 	Item pir_gf_achterdeur17 changed
 then
+    logInfo("pir_gf_achterdeur17","Start")
 	if (pir_gf_achterdeur17.state==OPEN) {
 		bg_w_pir_w_n.postUpdate(1)
 	} else {
 		bg_w_pir_w_n.postUpdate(0)
 	}
 	bg_w_pir_w_n.persist();
+    logInfo("pir_gf_achterdeur17","Finish")
 end
