@@ -114,7 +114,7 @@ then
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
-		if (inInitialisationPhase == false ) {
+		if ( (inInitialisationPhase === null) || (inInitialisationPhase == false) ) {
 				logInfo("LightsOn_Sensor","inInitialisationPhase is false, return.")
                 return;
 		}
