@@ -111,15 +111,16 @@ when
 then
 	logInfo("LightsOn_Sensor","Start")
 	if (backoffLock == null) {
-	    logInfo("LightsOn_Sensor","Finish, backoffLock===null, early return")
-		return;
+	    logInfo("LightsOn_Sensor","Finish, backoffLock===null, creationg new one")
+		backoffLock=new ReentrantLock()
 	}
 	backoffLock.lock()
 	logDebug("LightsOn_Sensor","backoffLock acquired")
 	try {
 		if ( (inInitialisationPhase === null) || (inInitialisationPhase == true) ) {
-				logInfo("LightsOn_Sensor","inInitialisationPhase is null or true, return.")
-                return;
+				logInfo("LightsOn_Sensor","inInitialisationPhase is null or true, creating new one")
+				inInitialisationPhase=false
+
 		}
 		var Number IntensiteitAverage = LichtIntensiteit_Woonkamer.averageSince(now.minusSeconds(300))
 		// averageSince werkt gewoon niet. Vanaf 20170110 geeft hij zelfs null terug, waardoor dit script crashte (zonder melding, door de try/catch)
