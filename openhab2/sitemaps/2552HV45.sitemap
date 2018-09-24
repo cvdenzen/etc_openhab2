@@ -40,9 +40,9 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Slider		item=		huelamp3_Dimm
 		Slider		item=		huelamp3_ColorTemp
 	}
-	//Frame label="a1" {
-	//	Chart item=LichtIntensiteit_Woonkamer  label="Lichtintensiteit woonkamer"
-	//}
+	Frame label="a1" {
+		Chart item=LichtIntensiteit_Woonkamer  label="Lichtintensiteit woonkamer" period=D
+	}
 	//Chart item=chart3 label="Chart3"
 	//Chart item=bg_w_pir_w_n label="Beweging achterdeur Begane Grond" service="rrd4j"
 	//Chart item=bg_w_tv_w_n label="Tv" service="rrd4j"
