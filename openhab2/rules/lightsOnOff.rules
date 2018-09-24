@@ -339,10 +339,10 @@ when
 	Item pir_gf_achterdeur17 changed
 then
     logInfo("pir_gf_achterdeur17","Start")
-	if (pir_gf_achterdeur17.state==CLOSED) {
-		bg_w_pir_w_n.postUpdate(1)
-	} else {
+	if (pir_gf_achterdeur17.state==OPEN) {
 		bg_w_pir_w_n.postUpdate(0)
+	} else {
+		bg_w_pir_w_n.postUpdate(1)
 	}
 	bg_w_pir_w_n.persist();
     logInfo("pir_gf_achterdeur17","Finish")
