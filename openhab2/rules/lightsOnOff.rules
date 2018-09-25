@@ -324,17 +324,3 @@ then
     logInfo("bg_x_imac3","Finish")
 end
 
-// tbv persistence number item zeten
-rule "pir_gf_achterdeur17"
-when
-	Item pir_gf_achterdeur17 changed
-then
-    logInfo("pir_gf_achterdeur17","Start")
-	if (pir_gf_achterdeur17.state==OPEN) {
-		bg_w_pir_w_n.postUpdate(0)
-	} else {
-		bg_w_pir_w_n.postUpdate(1)
-	}
-	bg_w_pir_w_n.persist();
-    logInfo("pir_gf_achterdeur17","Finish")
-end
