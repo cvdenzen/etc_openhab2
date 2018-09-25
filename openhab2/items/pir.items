@@ -2,7 +2,7 @@ Group chart3 "Chart3"
 
 Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nnw/pir:state:MAP(gpioDigital.map)]" }
 // pir tbv persistence
-Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3)
+Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3) { mqtt="<[broker:f0/nnw/pir:state:MAP(gpio2int.map)]" }
 // de tv op begane grond, west, tv, west
 // The ping command is not very reliable. Packets are easily lost, resulting in false negatives. I think netcat (=nc) is better.
 // options: z: do not send any data, -v verbose, -w <seconds>: timeout. Use an unused port, that will report "Connection refused".
