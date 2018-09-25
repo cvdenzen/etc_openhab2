@@ -1,8 +1,6 @@
 /* niet nodig import java.lang.Math */
 import java.util.concurrent.locks.ReentrantLock
 //import java.util.Calendar
-
-import java.util.concurrent.locks.ReentrantLock
 import java.util.Timer
 
 var Timer backoffTimer
