@@ -1,5 +1,7 @@
 Group chart3 "Chart3"
-
+//
+// PIR sensor, TV, iMac
+//
 Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nnw/pir:state:MAP(gpioDigital.map)]" }
 // pir tbv persistence
 Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3) { mqtt="<[broker:f0/nnw/pir:state:MAP(gpio2int.map)]" }
@@ -13,7 +15,7 @@ Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3) { mqtt="<[broker:f0/nnw
 // nc -zv -w 20 192.168.2.109 23999 2>&1 | grep " connect to " | sed -e "s/.*onnection refused.*/ON/" -e "s/.*connect to.*/OFF/"
 Switch bg_w_tv_w "TV huiskamer [%3s]" { channel="network:pingdevice:device_bg_w_tv_w:online" }
 // tv tbv persistence, via rule
-Number bg_w_tv_w_n "TV huiskamer [%1d]" (chart3)
+Number bg_w_tv_w_n "TV huiskamer [%1d]" (chart3) { channel="network:pingdevice:device_bg_w_tv_w:online:MAP(gpioDigital.map)" }
 Switch bg_x_imac3 "iMac3 [%3s]" { channel="network:pingdevice:device_bg_x_imac3:online" }
 // iMac3 tbv persistence, via rule
-Number bg_x_imac3_n "iMac3 [%1d]" (chart3)
+Number bg_x_imac3_n "iMac3 [%1d]" (chart3){ channel="network:pingdevice:device_bg_x_imac3:online:MAP(gpioDigital.map)" }
