@@ -221,7 +221,7 @@ when
 	// CLOSED betekent in principe bij activelow HI op de pin.
 	Item pir_gf_achterdeur17 changed to CLOSED
 then
-    logInfo("PIR achterdeur licht aan","Start")
+    //logInfo("PIR achterdeur licht aan","Start")
 	if (inInitialisationPhase) {
 		logDebug("pir_gf_achterdeur17","pir_gf_achterdeur17 changed to actief (er is beweging), maar inInitialisationPhase, dus geen verdere actie")
 		return;
@@ -294,7 +294,7 @@ then
 	finally {
 		universalLock.unlock()
 	}
-    logInfo("PIR achterdeur licht aan","Finish")
+    //logInfo("PIR achterdeur licht aan","Finish")
 end
 
 // tbv persistence number item zetten, alleen numbers kunnen in rrd4j
