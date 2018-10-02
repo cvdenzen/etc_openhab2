@@ -12,8 +12,8 @@ Number bg_w_pir_w_n "PIR bewegingssensor [%1d]" (chart3) { mqtt="<[broker:f0/nnw
 // nc: connect to 192.168.2.79 port 23999 (tcp) failed: No route to host
 // nc -zv -w 20 192.168.2.109 23999 2>&1 | grep " connect to " | sed -e "s/.*onnection refused.*/ON/" -e "s/.*connect to.*/OFF/"
 Switch bg_w_tv_w "TV huiskamer [%3s]" { channel="network:pingdevice:device_bg_w_tv_w:online" }
-// tv tbv persistence, via rule
-Number bg_w_tv_w_n "TV huiskamer [%1d]" (chart3)
+// tv tbv persistence, listen to mqtt messages that are sent by Openhab itself (mqtt event)!
+Number bg_w_tv_w_n "TV huiskamer [%1d]" (chart3)  { mqtt="<[broker:oh/bg_w_tv_w:state:MAP(gpio2int.map)]" }
 Switch bg_x_imac3 "iMac3 [%3s]" { channel="network:pingdevice:device_bg_x_imac3:online" }
-// iMac3 tbv persistence, via rule
-Number bg_x_imac3_n "iMac3 [%1d]" (chart3)
+// iMac3 tbv persistence, listen to mqtt messages that are sent by Openhab itself (mqtt event)!
+Number bg_x_imac3_n "iMac3 [%1d]" (chart3)  { mqtt="<[broker:oh/bg_x_imac3:state:MAP(gpio2int.map)]" }
