@@ -5,4 +5,4 @@
 sudo -s -u openhab
 git pull
 cp -a openhab2/* /etc/openhab2
-service openhab2 restart
+#service openhab2 restart

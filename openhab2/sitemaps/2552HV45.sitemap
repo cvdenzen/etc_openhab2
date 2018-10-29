@@ -7,6 +7,7 @@ sitemap 2552HV45 label="Huize Van Denzen-Dijkstra"
 		Switch item=Light_GF_Huiskamer_Achter_Staandelamp mappings=[OFF="Uit",ON="Aan"]
 		Switch item=GF_Huiskamer_eettafel mappings=[OFF="Uit",ON="Aan"]
 		Text item=bg_w_tv_w
+		Text item=bg_x_imac2
 		Text item=bg_x_imac3
         //        Text item=pir_gf_achterdeur
 		// pir aan fysieke pen 11.

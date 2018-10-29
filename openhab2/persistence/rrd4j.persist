@@ -13,6 +13,7 @@ Items {
   LichtIntensiteit_Woonkamer : strategy = everyChange, every30seconds, everyUpdate
   bg_w_pir_w_n : strategy = everyChange, every30seconds, everyUpdate
   bg_w_tv_w_n : strategy = everyChange, every30seconds, everyUpdate
+  bg_x_imac2_n : strategy = everyChange, every30seconds, everyUpdate
   bg_x_imac3_n : strategy = everyChange, every30seconds, everyUpdate
 }
 
