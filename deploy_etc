@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #cd ~/gitrepos/etc_openhab2
 
 sudo -s -u openhab
