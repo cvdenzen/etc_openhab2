@@ -1,4 +1,5 @@
 Group chart3 "Chart3"
+Group chart4 "Chart4"
 
 Contact pir_gf_achterdeur17 "PIR_achterdeur [%s]" { mqtt="<[broker:f0/nnw/pir:state:MAP(gpioDigital.map)]" }
 // pir tbv persistence
