@@ -1,4 +1,7 @@
 # etc_openhab2
+
+THIS GITHUB REPOSITORY IS OLD. NOV 2018 MOVED TO SOURCEFORGE.
+
 Configuration directory of my personal /etc/openhab2 directory
 
 On iMac:
